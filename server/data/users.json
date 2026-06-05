@@ -1,0 +1,47 @@
+[
+  {
+    "password": "jt17212552",
+    "profile": {
+      "name": "pobpetch",
+      "email": "petchpobpob@gmail.com",
+      "phone": "0993545425",
+      "avatar": "",
+      "bio": "",
+      "skills": [],
+      "completedJobs": 0,
+      "rating": 0,
+      "reviews": [],
+      "isAdmin": false
+    }
+  },
+  {
+    "password": "jt17212552",
+    "profile": {
+      "name": "petchpob",
+      "email": "janyamonnnuamnoo@gmail.com",
+      "phone": "0874131999",
+      "avatar": "",
+      "bio": "",
+      "skills": [],
+      "completedJobs": 0,
+      "rating": 0,
+      "reviews": [],
+      "isAdmin": false
+    }
+  },
+  {
+    "password": "jt17212552",
+    "profile": {
+      "name": "petchpobaaa",
+      "email": "janyamonnuamnoo@gmail.com",
+      "phone": "0874131999",
+      "avatar": "",
+      "bio": "",
+      "skills": [],
+      "completedJobs": 0,
+      "rating": 0,
+      "reviews": [],
+      "isAdmin": false
+    }
+  }
+]

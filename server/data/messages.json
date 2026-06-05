@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1780562855180,
+    "senderEmail": "petchpobpob@gmail.com",
+    "receiverEmail": "janyamonnuamnoo@gmail.com",
+    "text": "hello test",
+    "timestamp": "2026-06-04T08:47:35.180Z",
+    "isAccepted": true
+  },
+  {
+    "id": 1780563070990,
+    "senderEmail": "janyamonnuamnoo@gmail.com",
+    "receiverEmail": "petchpobpob@gmail.com",
+    "text": "hey, what up",
+    "timestamp": "2026-06-04T08:51:10.990Z",
+    "isAccepted": true
+  },
+  {
+    "id": 1780563152051,
+    "senderEmail": "janyamonnuamnoo@gmail.com",
+    "receiverEmail": "petchpobpob@gmail.com",
+    "text": "hi",
+    "timestamp": "2026-06-04T08:52:32.051Z",
+    "isAccepted": true
+  },
+  {
+    "id": 1780563177462,
+    "senderEmail": "petchpobpob@gmail.com",
+    "receiverEmail": "janyamonnuamnoo@gmail.com",
+    "text": "gcgucilgcgiclvviyl",
+    "timestamp": "2026-06-04T08:52:57.462Z",
+    "isAccepted": true
+  },
+  {
+    "id": 1780563198260,
+    "senderEmail": "petchpobpob@gmail.com",
+    "receiverEmail": "janyamonnuamnoo@gmail.com",
+    "text": "nigggh",
+    "timestamp": "2026-06-04T08:53:18.260Z",
+    "isAccepted": true
+  }
+]
