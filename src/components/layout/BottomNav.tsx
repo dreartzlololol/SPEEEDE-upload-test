@@ -2,11 +2,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { Home, PlusCircle, MessageSquare, User, MapPin } from 'lucide-react';
 import { cn } from '@/utils/cn';
 import { useSettings } from '@/contexts/SettingsContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { soundEffects } from '@/lib/soundEffects';
 
 export default function BottomNav() {
   const location = useLocation();
   const { theme, language } = useSettings();
+  const { user, showAuthModal } = useAuth();
   const isTh = language === 'th';
   const isRot = language === 'brainrot';
 
@@ -25,13 +27,20 @@ export default function BottomNav() {
           const isActive = location.pathname === item.path;
           const Icon = item.icon;
           
-          return (
-            <Link
-              key={item.path}
-              id={`tutorial-nav-${item.path.slice(1)}`}
-              to={item.path}
-              onClick={() => soundEffects.play('click', theme, language)}
-              className={cn(
+            const isProtected = ['/post-job', '/chat', '/profile'].includes(item.path);
+            return (
+              <Link
+                key={item.path}
+                id={`tutorial-nav-${item.path.slice(1)}`}
+                to={!user && isProtected ? '#' : item.path}
+                onClick={(e) => {
+                  soundEffects.play('click', theme, language);
+                  if (isProtected && !user) {
+                    e.preventDefault();
+                    showAuthModal();
+                  }
+                }}
+                className={cn(
                 "flex flex-col items-center justify-center space-y-1 transition-all",
                 isActive ? (item.activeColor || "text-speede-red") : "text-gray-400 hover:text-gray-600 dark:hover:text-gray-300",
                 isActive && "transform -translate-y-1"

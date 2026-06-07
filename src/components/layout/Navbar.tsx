@@ -12,7 +12,7 @@ import { soundEffects } from '@/lib/soundEffects';
 import { useNotifications } from '@/contexts/NotificationContext';
 
 export default function Navbar() {
-  const { user } = useAuth();
+  const { user, showAuthModal } = useAuth();
   const { theme, language } = useSettings();
   const { notifications, unreadCount, markAsRead, markAllAsRead, clearAll, addNotification } = useNotifications();
   const navigate = useNavigate();
@@ -118,16 +118,25 @@ export default function Navbar() {
           <Link id="tutorial-desktop-map" to="/map" onClick={() => soundEffects.play('click', theme, language)} className="text-sm font-bold theme-panel rounded-full px-4 py-1.5 hover:bg-theme-secondary/20 transition-all select-none">
             {isRot ? 'The Ends' : isTh ? 'แผนที่' : 'Map'}
           </Link>
-          <Link id="tutorial-desktop-post" to="/post-job" onClick={() => soundEffects.play('click', theme, language)} className="text-sm font-bold theme-panel text-theme-primary rounded-full px-4 py-1.5 hover:bg-theme-primary/10 transition-all border-[var(--theme-border-width)] border-theme-primary/20 select-none">
+          <Link id="tutorial-desktop-post" to={user ? "/post-job" : "#"} onClick={(e) => {
+            soundEffects.play('click', theme, language);
+            if (!user) { e.preventDefault(); showAuthModal(); }
+          }} className="text-sm font-bold theme-panel text-theme-primary rounded-full px-4 py-1.5 hover:bg-theme-primary/10 transition-all border-[var(--theme-border-width)] border-theme-primary/20 select-none">
             {isRot ? 'Drop Quest' : isTh ? 'ลงประกาศงาน' : 'Post Job'}
           </Link>
-          <Link id="tutorial-desktop-chat" to="/chat" onClick={() => soundEffects.play('click', theme, language)} className="text-sm font-bold theme-panel rounded-full px-4 py-1.5 hover:bg-theme-secondary/20 transition-all select-none">
+          <Link id="tutorial-desktop-chat" to={user ? "/chat" : "#"} onClick={(e) => {
+            soundEffects.play('click', theme, language);
+            if (!user) { e.preventDefault(); showAuthModal(); }
+          }} className="text-sm font-bold theme-panel rounded-full px-4 py-1.5 hover:bg-theme-secondary/20 transition-all select-none">
             {isRot ? 'Yapping' : isTh ? 'ข้อความ' : 'Messages'}
           </Link>
         </nav>
 
         <div className="flex items-center space-x-4">
-          <Link id="tutorial-desktop-settings" to="/settings" onClick={() => soundEffects.play('click', theme, language)} className="w-10 h-10 rounded-full theme-panel flex items-center justify-center text-theme-text hover:bg-theme-secondary/20 transition-all select-none">
+          <Link id="tutorial-desktop-settings" to={user ? "/settings" : "#"} onClick={(e) => {
+            soundEffects.play('click', theme, language);
+            if (!user) { e.preventDefault(); showAuthModal(); }
+          }} className="w-10 h-10 rounded-full theme-panel flex items-center justify-center text-theme-text hover:bg-theme-secondary/20 transition-all select-none">
             <SettingsIcon className="w-5 h-5" />
           </Link>
 
@@ -249,11 +258,17 @@ export default function Navbar() {
               </div>
             </Link>
           ) : (
-            <Link to="/login" onClick={() => soundEffects.play('click', theme, language)} className="hidden sm:block text-sm font-medium dark:text-white ml-4 theme-panel rounded-full px-4 py-2 bg-white dark:bg-speede-darkGray">
+            <button onClick={() => {
+              soundEffects.play('click', theme, language);
+              showAuthModal();
+            }} className="hidden sm:block text-sm font-medium dark:text-white ml-4 theme-panel rounded-full px-4 py-2 bg-white dark:bg-speede-darkGray cursor-pointer">
               {isRot ? 'Identify Yourself' : isTh ? 'เข้าสู่ระบบ' : 'Sign in'}
-            </Link>
+            </button>
           )}
-          <Link to="/post-job" onClick={() => soundEffects.play('click', theme, language)}>
+          <Link to={user ? "/post-job" : "#"} onClick={(e) => {
+            soundEffects.play('click', theme, language);
+            if (!user) { e.preventDefault(); showAuthModal(); }
+          }}>
             <Button size="sm" className="hidden sm:flex ml-2">{isRot ? 'Drop a Quest' : isTh ? 'ลงประกาศงาน' : 'Post a Job'}</Button>
           </Link>
         </div>

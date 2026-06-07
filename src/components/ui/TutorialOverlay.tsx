@@ -143,19 +143,23 @@ export function TutorialOverlay() {
   // Determine popover position relative to target
   let popoverStyle: React.CSSProperties = {};
   if (targetRect) {
+    const isMobile = window.innerWidth < 768;
     const isBottomNav = targetRect.top > window.innerHeight / 2;
     if (isBottomNav) {
       // Show above BottomNav
       popoverStyle = {
         bottom: `${window.innerHeight - targetRect.top + 20}px`,
         left: '50%',
-        transform: 'translateX(-50%)'
+        transform: 'translateX(-50%)',
+        margin: 0
       };
     } else {
       // Show below Navbar
       popoverStyle = {
         top: `${targetRect.bottom + 20}px`,
-        left: Math.min(Math.max(20, targetRect.left + targetRect.width / 2 - 160), window.innerWidth - 340) + 'px'
+        left: isMobile ? '50%' : Math.min(Math.max(20, targetRect.left + targetRect.width / 2 - 160), window.innerWidth - 340) + 'px',
+        transform: isMobile ? 'translateX(-50%)' : 'none',
+        margin: 0
       };
     }
   }
@@ -212,7 +216,7 @@ export function TutorialOverlay() {
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           style={targetRect ? { position: 'absolute', ...popoverStyle } : {}}
           className={clsx(
-            "bg-white dark:bg-speede-darkGray w-[90%] max-w-sm rounded-[2rem] p-8 shadow-2xl border border-gray-100 dark:border-gray-800 text-center relative overflow-hidden",
+            "bg-white dark:bg-speede-darkGray w-[92%] max-w-[340px] rounded-[2rem] p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-800 text-center relative overflow-hidden",
             !targetRect && "mx-auto mt-[15vh]"
           )}
         >
@@ -234,9 +238,9 @@ export function TutorialOverlay() {
               initial={{ scale: 0, rotate: -180 }}
               animate={{ scale: 1, rotate: 0 }}
               transition={{ delay: 0.2, type: 'spring' }}
-              className={clsx("w-20 h-20 rounded-full flex items-center justify-center text-white shadow-xl shadow-black/10", step.color)}
+              className={clsx("w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center text-white shadow-xl shadow-black/10", step.color)}
             >
-              <Icon className="w-10 h-10" />
+              <Icon className="w-8 h-8 sm:w-10 sm:h-10" />
             </motion.div>
           </div>
 

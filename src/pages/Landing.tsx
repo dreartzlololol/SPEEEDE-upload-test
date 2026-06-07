@@ -100,7 +100,7 @@ const LightningEffect = () => {
 
 export default function Landing() {
   const { language } = useSettings();
-  const { user } = useAuth();
+  const { user, showAuthModal } = useAuth();
   const isTh = language === 'th';
   const isRot = language === 'brainrot';
 
@@ -172,17 +172,30 @@ export default function Landing() {
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-            <Link to={user ? "/feed" : "/register"} className="w-full sm:w-auto">
-              <Button size="lg" className="w-full shadow-xl shadow-speede-red/30 group hover:-translate-y-1 transition-all rounded-full px-8 py-6 text-lg bg-gradient-to-r from-speede-red to-rose-600 hover:from-speede-red hover:to-speede-red border-none">
+            {user ? (
+              <Link to="/feed" className="w-full sm:w-auto">
+                <Button size="lg" className="w-full shadow-xl shadow-speede-red/30 group hover:-translate-y-1 transition-all rounded-full px-8 py-6 text-lg bg-gradient-to-r from-speede-red to-rose-600 hover:from-speede-red hover:to-speede-red border-none">
+                  {isRot ? 'Secure The Bag' : isTh ? 'เริ่มหาเงินเลย' : 'Start Earning Now'}
+                  <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            ) : (
+              <Button onClick={showAuthModal} size="lg" className="w-full sm:w-auto shadow-xl shadow-speede-red/30 group hover:-translate-y-1 transition-all rounded-full px-8 py-6 text-lg bg-gradient-to-r from-speede-red to-rose-600 hover:from-speede-red hover:to-speede-red border-none">
                 {isRot ? 'Secure The Bag' : isTh ? 'เริ่มหาเงินเลย' : 'Start Earning Now'}
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
-            </Link>
-            <Link to="/post-job" className="w-full sm:w-auto">
-              <Button size="lg" variant="secondary" className="w-full rounded-full px-8 py-6 text-lg border-2 theme-panel hover:bg-theme-secondary/50 transition-all">
+            )}
+            {user ? (
+              <Link to="/post-job" className="w-full sm:w-auto">
+                <Button size="lg" variant="secondary" className="w-full rounded-full px-8 py-6 text-lg border-2 theme-panel hover:bg-theme-secondary/50 transition-all">
+                  {isRot ? 'Drop A Quest' : isTh ? 'ลงประกาศงาน' : 'Post a Job'}
+                </Button>
+              </Link>
+            ) : (
+              <Button onClick={showAuthModal} size="lg" variant="secondary" className="w-full sm:w-auto rounded-full px-8 py-6 text-lg border-2 theme-panel hover:bg-theme-secondary/50 transition-all">
                 {isRot ? 'Drop A Quest' : isTh ? 'ลงประกาศงาน' : 'Post a Job'}
               </Button>
-            </Link>
+            )}
           </div>
 
           {/* Social Proof Mini */}

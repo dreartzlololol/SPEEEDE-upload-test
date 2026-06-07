@@ -22,6 +22,9 @@ interface AuthContextType {
   register: (email: string, password: string, name: string, phone: string) => Promise<void>;
   logout: () => void;
   updateUser: (updates: Partial<User>) => Promise<void>;
+  isAuthModalOpen: boolean;
+  showAuthModal: () => void;
+  closeAuthModal: () => void;
 }
 
 import { useSettings } from '@/contexts/SettingsContext';
@@ -39,6 +42,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       return null;
     }
   });
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
+  const showAuthModal = () => setIsAuthModalOpen(true);
+  const closeAuthModal = () => setIsAuthModalOpen(false);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
@@ -139,7 +146,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, updateUser }}>
+    <AuthContext.Provider value={{ 
+      user, login, register, logout, updateUser, 
+      isAuthModalOpen, showAuthModal, closeAuthModal 
+    }}>
       {children}
     </AuthContext.Provider>
   );

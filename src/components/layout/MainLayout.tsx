@@ -4,6 +4,7 @@ import BottomNav from './BottomNav';
 import { BackgroundEffects } from '@/components/ui/BackgroundEffects';
 import { ActiveJobPrompt } from '@/components/jobs/ActiveJobPrompt';
 import { TutorialOverlay } from '@/components/ui/TutorialOverlay';
+import { AuthModal } from '@/components/auth/AuthModal';
 
 export default function MainLayout() {
   const location = useLocation();
@@ -12,6 +13,7 @@ export default function MainLayout() {
       <BackgroundEffects />
       <ActiveJobPrompt />
       <TutorialOverlay />
+      <AuthModal />
       <Navbar />
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-16">
         <div key={location.pathname} className="animate-fadeIn">

@@ -22,7 +22,7 @@ export default function Feed() {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [detailedJob, setDetailedJob] = useState<Job | null>(null);
   const { jobs, hiddenJobs, hideJob } = useJobs();
-  const { user } = useAuth();
+  const { user, showAuthModal } = useAuth();
   const navigate = useNavigate();
 
   // Advanced filters state
@@ -40,7 +40,7 @@ export default function Feed() {
   const handleApply = (e: React.MouseEvent, job: Job) => {
     e.stopPropagation();
     if (!user) {
-      navigate('/login');
+      showAuthModal();
       return;
     }
     setSelectedJob(job);

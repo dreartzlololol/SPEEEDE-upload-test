@@ -17,6 +17,7 @@ import { AuthProvider } from '@/contexts/AuthContext';
 import { SettingsProvider } from '@/contexts/SettingsContext';
 import { NotificationProvider } from '@/contexts/NotificationContext';
 import { TutorialProvider } from '@/contexts/TutorialContext';
+import { RequireAuth } from '@/components/auth/RequireAuth';
 
 function App() {
   return (
@@ -37,13 +38,13 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path="/" element={<Landing />} />
           <Route path="/feed" element={<Feed />} />
-          <Route path="/post-job" element={<JobPosting />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/post-job" element={<RequireAuth><JobPosting /></RequireAuth>} />
+          <Route path="/chat" element={<RequireAuth><Chat /></RequireAuth>} />
+          <Route path="/profile" element={<RequireAuth><Profile /></RequireAuth>} />
+          <Route path="/settings" element={<RequireAuth><Settings /></RequireAuth>} />
           <Route path="/map" element={<MapView />} />
-          <Route path="/workspace/:id" element={<ActiveWorkspace />} />
-          <Route path="/admin" element={<Dashboard />} />
+          <Route path="/workspace/:id" element={<RequireAuth><ActiveWorkspace /></RequireAuth>} />
+          <Route path="/admin" element={<RequireAuth><Dashboard /></RequireAuth>} />
         </Route>
       </Routes>
     </Router>
