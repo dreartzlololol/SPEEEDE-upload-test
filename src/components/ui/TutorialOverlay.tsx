@@ -149,17 +149,22 @@ export function TutorialOverlay() {
       // Show above BottomNav
       popoverStyle = {
         bottom: `${window.innerHeight - targetRect.top + 20}px`,
-        left: '50%',
-        transform: 'translateX(-50%)',
-        margin: 0
+        left: 0,
+        right: 0,
+        margin: '0 auto'
       };
     } else {
       // Show below Navbar
       popoverStyle = {
         top: `${targetRect.bottom + 20}px`,
-        left: isMobile ? '50%' : Math.min(Math.max(20, targetRect.left + targetRect.width / 2 - 160), window.innerWidth - 340) + 'px',
-        transform: isMobile ? 'translateX(-50%)' : 'none',
-        margin: 0
+        ...(isMobile ? {
+          left: 0,
+          right: 0,
+          margin: '0 auto'
+        } : {
+          left: Math.min(Math.max(20, targetRect.left + targetRect.width / 2 - 160), window.innerWidth - 340) + 'px',
+          margin: 0
+        })
       };
     }
   }
@@ -216,8 +221,8 @@ export function TutorialOverlay() {
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           style={targetRect ? { position: 'absolute', ...popoverStyle } : {}}
           className={clsx(
-            "bg-white dark:bg-speede-darkGray w-[92%] max-w-[340px] rounded-[2rem] p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-800 text-center relative overflow-hidden",
-            !targetRect && "mx-auto mt-[15vh]"
+            "bg-white dark:bg-speede-darkGray w-[92%] max-w-[340px] rounded-[2rem] p-6 sm:p-8 shadow-2xl border border-gray-100 dark:border-gray-800 text-center relative overflow-hidden mx-auto",
+            !targetRect && "mt-[15vh]"
           )}
         >
           {/* Progress Indicators */}
