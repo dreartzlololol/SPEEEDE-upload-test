@@ -1,0 +1,187 @@
+[
+  {
+    "id": "notif-1780840885887-4tad56ll3",
+    "title": "Download Started! 📥",
+    "message": "Downloading installer \"SpeedE-Setup.exe\" for your device.",
+    "type": "success",
+    "timestamp": "2026-06-07T14:01:25.887Z",
+    "read": true,
+    "userEmail": "petchpobpob@gmail.com"
+  },
+  {
+    "id": "notif-1780831497744-ccyximm0o",
+    "userEmail": "petchpobaaa@speede.com",
+    "title": "ผู้รับจ้างยกเลิกงาน ⚠️",
+    "message": "ผู้รับจ้างงาน \"big black monkey boi\" ของคุณได้ยกเลิกและทิ้งงานไปแล้ว",
+    "type": "urgent",
+    "timestamp": "2026-06-07T11:24:57.744Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780831497554-x2d1pdorj",
+    "userEmail": "petchpobaaa@speede.com",
+    "title": "ผู้รับจ้างยกเลิกงาน ⚠️",
+    "message": "ผู้รับจ้างงาน \"big black monkey boi\" ของคุณได้ยกเลิกและทิ้งงานไปแล้ว",
+    "type": "urgent",
+    "timestamp": "2026-06-07T11:24:57.554Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780831497371-tq7k9zids",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "ผู้รับจ้างยกเลิกงาน ⚠️",
+    "message": "ผู้รับจ้างงาน \"1234\" ของคุณได้ยกเลิกและทิ้งงานไปแล้ว",
+    "type": "urgent",
+    "timestamp": "2026-06-07T11:24:57.371Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780831497024-91eyqw7c6",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "ผู้รับจ้างยกเลิกงาน ⚠️",
+    "message": "ผู้รับจ้างงาน \"1234\" ของคุณได้ยกเลิกและทิ้งงานไปแล้ว",
+    "type": "urgent",
+    "timestamp": "2026-06-07T11:24:57.024Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780831495065-zp8339j1g",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "ผู้รับจ้างยกเลิกงาน ⚠️",
+    "message": "ผู้รับจ้างงาน \"1234\" ของคุณได้ยกเลิกและทิ้งงานไปแล้ว",
+    "type": "urgent",
+    "timestamp": "2026-06-07T11:24:55.065Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780831175148-mukwde8lq",
+    "userEmail": "petchpobpob@gmail.com",
+    "title": "ยินดีด้วย! รับเข้าทำงาน 🎉",
+    "message": "คุณถูกรับเข้าทำงาน \"1234\" แล้ว!",
+    "type": "success",
+    "timestamp": "2026-06-07T11:19:35.148Z",
+    "read": true,
+    "link": "/workspace/1780831168319"
+  },
+  {
+    "id": "notif-1780831168328-9ceoalvhf",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "[มุมมองผู้จ้าง] ผู้สมัครงานรายใหม่! 👥",
+    "message": "มีผู้สมัครงาน \"pobpetch\" ของคุณ คลิกเพื่อตรวจสอบและอนุมัติ",
+    "type": "info",
+    "timestamp": "2026-06-07T11:19:28.328Z",
+    "read": true,
+    "link": "/profile",
+    "data": {
+      "application": {
+        "jobId": 1780817952311,
+        "applicantName": "pobpetch",
+        "contact": "petchpobpob@gmail.com",
+        "experience": "sdfhsdfgh",
+        "message": "asdfgasdfgasdfg",
+        "id": 1780831168319,
+        "status": "pending",
+        "timestamp": "2026-06-07T11:19:28.319Z"
+      }
+    }
+  },
+  {
+    "id": "notif-1780831168327-q54hua11d",
+    "title": "ส่งใบสมัครงานสำเร็จ! 📤",
+    "message": "ส่งใบสมัครสำหรับงาน \"1234\" เรียบร้อยแล้ว รอผู้จ้างตรวจสอบ",
+    "type": "info",
+    "timestamp": "2026-06-07T11:19:28.327Z",
+    "read": true,
+    "link": "/profile",
+    "userEmail": "petchpobpob@gmail.com"
+  },
+  {
+    "id": "notif-1780830927239-xodbajn9h",
+    "userEmail": "petchpobpob@gmail.com",
+    "title": "ยินดีด้วย! รับเข้าทำงาน 🎉",
+    "message": "คุณถูกรับเข้าทำงาน \"1234\" แล้ว!",
+    "type": "success",
+    "timestamp": "2026-06-07T11:15:27.239Z",
+    "read": true,
+    "link": "/workspace/1780830919055"
+  },
+  {
+    "id": "notif-1780830919065-8x4r7hnat",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "[มุมมองผู้จ้าง] ผู้สมัครงานรายใหม่! 👥",
+    "message": "มีผู้สมัครงาน \"pobpetch\" ของคุณ คลิกเพื่อตรวจสอบและอนุมัติ",
+    "type": "info",
+    "timestamp": "2026-06-07T11:15:19.065Z",
+    "read": true,
+    "link": "/profile",
+    "data": {
+      "application": {
+        "jobId": 1780817952311,
+        "applicantName": "pobpetch",
+        "contact": "petchpobpob@gmail.com",
+        "experience": "zxcBV",
+        "message": "ZSXV",
+        "id": 1780830919055,
+        "status": "pending",
+        "timestamp": "2026-06-07T11:15:19.055Z"
+      }
+    }
+  },
+  {
+    "id": "notif-1780830919064-xm0mqbydx",
+    "title": "ส่งใบสมัครงานสำเร็จ! 📤",
+    "message": "ส่งใบสมัครสำหรับงาน \"1234\" เรียบร้อยแล้ว รอผู้จ้างตรวจสอบ",
+    "type": "info",
+    "timestamp": "2026-06-07T11:15:19.064Z",
+    "read": true,
+    "link": "/profile",
+    "userEmail": "petchpobpob@gmail.com"
+  },
+  {
+    "id": "notif-1780823771797-el823bmd2",
+    "userEmail": "petchpobpob@gmail.com",
+    "title": "ยินดีด้วย! รับเข้าทำงาน 🎉",
+    "message": "คุณถูกรับเข้าทำงาน \"1234\" แล้ว!",
+    "type": "success",
+    "timestamp": "2026-06-07T09:16:11.797Z",
+    "read": true,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780823760467-b79f3hclx",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "[มุมมองผู้จ้าง] ผู้สมัครงานรายใหม่! 👥",
+    "message": "มีผู้สมัครงาน \"pobpetch\" ของคุณ คลิกเพื่อตรวจสอบและอนุมัติ",
+    "type": "info",
+    "timestamp": "2026-06-07T09:16:00.467Z",
+    "read": true,
+    "link": "/profile",
+    "data": {
+      "application": {
+        "jobId": 1780817952311,
+        "applicantName": "pobpetch",
+        "contact": "petchpobpob@gmail.com",
+        "experience": "asdgf",
+        "message": "asgdf",
+        "id": 1780823760458,
+        "status": "pending",
+        "timestamp": "2026-06-07T09:16:00.458Z"
+      }
+    }
+  },
+  {
+    "id": "notif-1780823760467-48ntwxeaq",
+    "title": "ส่งใบสมัครงานสำเร็จ! 📤",
+    "message": "ส่งใบสมัครสำหรับงาน \"1234\" เรียบร้อยแล้ว รอผู้จ้างตรวจสอบ",
+    "type": "info",
+    "timestamp": "2026-06-07T09:16:00.467Z",
+    "read": true,
+    "link": "/profile",
+    "userEmail": "petchpobpob@gmail.com"
+  }
+]

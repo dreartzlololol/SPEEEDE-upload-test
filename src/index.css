@@ -1,0 +1,303 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default/Fallback variables */
+  --speede-primary: #E60023;
+  --speede-primary-dark: #B91C1C;
+  --speede-primary-light: #FCA5A5;
+}
+
+/* =========================================
+   THEME DICTIONARY
+   ========================================= */
+
+/* 1. Cartoon Theme (80s Retro) */
+[data-theme="cartoon"] {
+  --theme-bg: #FFF1A8;
+  --theme-bg-img: url("https://www.transparenttextures.com/patterns/cream-paper.png");
+  --theme-surface: #FFF9D0;
+  --theme-text: #111111;
+  --theme-text-muted: #555555;
+  --theme-primary: #DC2626;
+  --theme-secondary: #FFD166;
+  --theme-border-width: 4px;
+  --theme-border-color: #111111;
+  --theme-border-radius: 1.5rem; /* 24px */
+  --theme-shadow: 4px 4px 0px rgba(17, 17, 17, 1);
+  --theme-shadow-hover: 6px 6px 0px rgba(17, 17, 17, 1);
+  --theme-shadow-active: 0px 0px 0px rgba(17, 17, 17, 1);
+  --font-primary: 'Fredoka', 'Mitr', system-ui, sans-serif;
+  --font-display: 'Luckiest Guy', 'Mitr', cursive;
+  --theme-border-style: solid;
+}
+
+[data-theme="cartoon"] header {
+  background-color: var(--theme-bg) !important;
+  background-image: var(--theme-bg-img) !important;
+  background-size: 30px 30px;
+}
+
+[data-theme="cartoon"] header .theme-panel {
+  background-color: var(--theme-bg) !important;
+}
+
+/* Global outlines/borders for everything in cartoon theme */
+[data-theme="cartoon"] .border,
+[data-theme="cartoon"] .border-2,
+[data-theme="cartoon"] .border-4,
+[data-theme="cartoon"] button,
+[data-theme="cartoon"] .theme-button,
+[data-theme="cartoon"] .theme-panel:not(header) {
+  border-color: var(--theme-border-color) !important;
+  border-width: var(--theme-border-width) !important;
+  border-style: var(--theme-border-style) !important;
+}
+[data-theme="cartoon"] .border-t {
+  border-top-color: var(--theme-border-color) !important;
+  border-top-width: var(--theme-border-width) !important;
+  border-top-style: var(--theme-border-style) !important;
+}
+[data-theme="cartoon"] .border-b {
+  border-bottom-color: var(--theme-border-color) !important;
+  border-bottom-width: var(--theme-border-width) !important;
+  border-bottom-style: var(--theme-border-style) !important;
+}
+[data-theme="cartoon"] .border-l {
+  border-left-color: var(--theme-border-color) !important;
+  border-left-width: var(--theme-border-width) !important;
+  border-left-style: var(--theme-border-style) !important;
+}
+[data-theme="cartoon"] .border-r {
+  border-right-color: var(--theme-border-color) !important;
+  border-right-width: var(--theme-border-width) !important;
+  border-right-style: var(--theme-border-style) !important;
+}
+
+[data-theme="cartoon"] .bg-white,
+[data-theme="cartoon"] .dark\:bg-speede-darkGray,
+[data-theme="cartoon"] .bg-speede-darkGray,
+[data-theme="scifi"] .bg-white,
+[data-theme="scifi"] .dark\:bg-speede-darkGray,
+[data-theme="scifi"] .bg-speede-darkGray,
+[data-theme="steampunk"] .bg-white,
+[data-theme="steampunk"] .dark\:bg-speede-darkGray,
+[data-theme="steampunk"] .bg-speede-darkGray {
+  background-color: var(--theme-surface) !important;
+}
+
+[data-theme="cartoon"] .bg-gray-50,
+[data-theme="cartoon"] .bg-gray-100,
+[data-theme="scifi"] .bg-gray-50,
+[data-theme="scifi"] .bg-gray-100,
+[data-theme="steampunk"] .bg-gray-50,
+[data-theme="steampunk"] .bg-gray-100 {
+  background-color: var(--theme-bg) !important;
+}
+
+[data-theme="cartoon"] .fixed.backdrop-blur-sm .bg-white,
+[data-theme="cartoon"] .fixed.backdrop-blur-sm .bg-speede-darkGray {
+  border: var(--theme-border-width) solid var(--theme-border-color) !important;
+  box-shadow: var(--theme-shadow) !important;
+}
+
+[data-theme="cartoon"] button:not(.rounded-full) {
+  border-radius: var(--theme-border-radius) !important;
+}
+
+/* 2. Light Theme (Minimalist Clean) */
+[data-theme="light"] {
+  --theme-bg: #FAFAFA;
+  --theme-bg-img: none;
+  --theme-surface: #FFFFFF;
+  --theme-text: #18181B;
+  --theme-text-muted: #71717A;
+  --theme-primary: #E60023;
+  --theme-secondary: #F4F4F5;
+  --theme-border-width: 1px;
+  --theme-border-color: #E4E4E7;
+  --theme-border-radius: 1rem; /* 16px */
+  --theme-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --theme-shadow-hover: 0 8px 30px -4px rgba(0, 0, 0, 0.1);
+  --theme-shadow-active: 0 2px 10px -2px rgba(0, 0, 0, 0.05);
+  --font-primary: 'Space Grotesk', 'Prompt', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Prompt', system-ui, sans-serif;
+  --theme-border-style: solid;
+}
+
+/* 3. Dark Theme (Premium Dark) */
+[data-theme="dark"] {
+  --theme-bg: #0A0A0A;
+  --theme-bg-img: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  --theme-surface: #111111;
+  --theme-text: #FAFAFA;
+  --theme-text-muted: #A1A1AA;
+  --theme-primary: #E60023;
+  --theme-secondary: #18181B;
+  --theme-border-width: 1px;
+  --theme-border-color: rgba(255, 255, 255, 0.1);
+  --theme-border-radius: 1rem;
+  --theme-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.5);
+  --theme-shadow-hover: 0 4px 14px 0 rgba(230, 0, 35, 0.39);
+  --theme-shadow-active: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --font-primary: 'Space Grotesk', 'Prompt', system-ui, sans-serif;
+  --font-display: 'Space Grotesk', 'Prompt', system-ui, sans-serif;
+  --theme-border-style: solid;
+}
+
+/* 4. Sci-Fi Theme (Neon Cyberpunk) */
+[data-theme="scifi"] {
+  --theme-bg: #050505;
+  --theme-bg-img: linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
+  --theme-surface: #0a0a0c; /* Solid dark color */
+  --theme-text: #00F3FF;
+  --theme-text-muted: #00F3FF80;
+  --theme-primary: #FF003C;
+  --theme-secondary: rgba(0, 243, 255, 0.1);
+  --theme-border-width: 1px;
+  --theme-border-color: rgba(0, 243, 255, 0.3);
+  --theme-border-radius: 0px; /* Sharp edges */
+  --theme-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+  --theme-shadow-hover: 0 0 20px rgba(0, 243, 255, 0.5);
+  --theme-shadow-active: 0 0 5px rgba(0, 243, 255, 0.2);
+  --font-primary: 'Space Grotesk', 'Prompt', monospace;
+  --font-display: 'Space Grotesk', 'Prompt', monospace;
+  --theme-border-style: solid;
+}
+
+/* 5. Steampunk Theme (Brass & Gears) */
+[data-theme="steampunk"] {
+  --theme-bg: #2B1D14;
+  --theme-bg-img: url("https://www.transparenttextures.com/patterns/aged-paper.png");
+  --theme-surface: #412D20;
+  --theme-text: #D4B37F;
+  --theme-text-muted: #A38257;
+  --theme-primary: #C16738;
+  --theme-secondary: #5C3D26;
+  --theme-border-width: 3px;
+  --theme-border-color: #8C6239;
+  --theme-border-radius: 0.5rem; /* Slightly rounded */
+  --theme-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5), 0 5px 15px rgba(0, 0, 0, 0.5);
+  --theme-shadow-hover: inset 0 0 5px rgba(0, 0, 0, 0.3), 0 8px 20px rgba(0, 0, 0, 0.6);
+  --theme-shadow-active: inset 0 0 15px rgba(0, 0, 0, 0.8), 0 2px 5px rgba(0, 0, 0, 0.8);
+  --font-primary: 'Times New Roman', 'Chonburi', serif;
+  --font-display: 'Times New Roman', 'Chonburi', serif;
+  --theme-border-style: double; /* Fancy borders */
+}
+
+/* =========================================
+   GLOBAL BASE STYLES
+   ========================================= */
+@layer base {
+  html {
+    font-family: var(--font-primary);
+    background-color: var(--theme-bg);
+  }
+  
+  body {
+    @apply antialiased;
+    color: var(--theme-text);
+    background-color: var(--theme-bg);
+    background-image: var(--theme-bg-img);
+    background-size: 30px 30px;
+    background-position: center center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  h1, h2, h3, h4, h5, h6, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.05em;
+  }
+}
+
+/* =========================================
+   THEME UTILITIES
+   ========================================= */
+@layer utilities {
+  .theme-panel {
+    background-color: var(--theme-surface);
+    border-width: var(--theme-border-width);
+    border-color: var(--theme-border-color);
+    border-style: var(--theme-border-style);
+    border-radius: var(--theme-border-radius);
+    box-shadow: var(--theme-shadow);
+    color: var(--theme-text);
+    transition: all 0.2s ease;
+  }
+  
+  .theme-button {
+    background-color: var(--theme-primary);
+    color: #FFF; /* Most primary colors require white text */
+    border-width: var(--theme-border-width);
+    border-color: var(--theme-border-color);
+    border-style: var(--theme-border-style);
+    border-radius: var(--theme-border-radius);
+    box-shadow: var(--theme-shadow);
+    font-family: var(--font-display);
+    transition: all 0.15s ease;
+  }
+
+  .theme-button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--theme-shadow-hover);
+  }
+
+  .theme-button:active {
+    transform: translateY(2px);
+    box-shadow: var(--theme-shadow-active);
+  }
+
+  .theme-button-secondary {
+    background-color: var(--theme-secondary);
+    color: var(--theme-text);
+    border-width: var(--theme-border-width);
+    border-color: var(--theme-border-color);
+    border-style: var(--theme-border-style);
+    border-radius: var(--theme-border-radius);
+    box-shadow: var(--theme-shadow);
+    font-family: var(--font-display);
+    transition: all 0.15s ease;
+  }
+
+  .theme-input {
+    background-color: var(--theme-surface);
+    color: var(--theme-text);
+    border-width: var(--theme-border-width);
+    border-color: var(--theme-border-color);
+    border-style: var(--theme-border-style);
+    border-radius: var(--theme-border-radius);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    transition: all 0.2s ease;
+  }
+  
+  .theme-input:focus {
+    outline: none;
+    border-color: var(--theme-primary);
+    box-shadow: var(--theme-shadow);
+  }
+
+  .animate-fadeIn {
+    animation: fadeIn 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+  }
+}
+
+@keyframes gridMove {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0) scale(3); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(50px) scale(3); }
+}
+
+@keyframes custom-ping {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(2.8);
+    opacity: 0;
+  }
+}
+
+.animate-custom-ping {
+  animation: custom-ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
