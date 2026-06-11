@@ -1,5 +1,25 @@
 [
   {
+    "id": "notif-1780889601209-29kqu8r00",
+    "userEmail": "petchpobaaa@speede.com",
+    "title": "Worker abandoned job ⚠️",
+    "message": "The worker for your job \"big black monkey boi\" has abandoned the workspace.",
+    "type": "urgent",
+    "timestamp": "2026-06-08T03:33:21.209Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
+    "id": "notif-1780889599181-7cvzoj5i6",
+    "userEmail": "pobpetch@speede.com",
+    "title": "Worker abandoned job ⚠️",
+    "message": "The worker for your job \"ช่วยอมให้ฉันที\" has abandoned the workspace.",
+    "type": "urgent",
+    "timestamp": "2026-06-08T03:33:19.181Z",
+    "read": false,
+    "link": "/profile"
+  },
+  {
     "id": "notif-1780840885887-4tad56ll3",
     "title": "Download Started! 📥",
     "message": "Downloading installer \"SpeedE-Setup.exe\" for your device.",
