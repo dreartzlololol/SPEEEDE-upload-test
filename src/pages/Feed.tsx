@@ -4,7 +4,7 @@ import { Search, MapPin, Clock, Star, Filter, X, Zap } from 'lucide-react';
 import { useJobs, Job } from '@/contexts/JobContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
-import { useNavigate } from 'react-router-dom';
+
 import { Card, CardContent } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
@@ -23,7 +23,6 @@ export default function Feed() {
   const [detailedJob, setDetailedJob] = useState<Job | null>(null);
   const { jobs, hiddenJobs, hideJob } = useJobs();
   const { user, showAuthModal } = useAuth();
-  const navigate = useNavigate();
 
   // Advanced filters state
   const [showFilters, setShowFilters] = useState(false);
