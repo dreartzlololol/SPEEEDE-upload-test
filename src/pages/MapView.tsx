@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useJobs, Job } from '@/contexts/JobContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapContainer, TileLayer, Marker, Popup, Circle, Polyline, useMap, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Circle, Polyline, useMap } from 'react-leaflet';
 import { createCustomIcon, createGoogleUserDotIcon } from '@/lib/mapIcon';
 import { JobDetailsModal } from '@/components/jobs/JobDetailsModal';
 import { ApplicationModal } from '@/components/jobs/ApplicationModal';
@@ -56,15 +56,6 @@ function LeafletLocationBinder({ onLocationFound }: { onLocationFound: (lat: num
       map.off('locationfound', handleFound);
     };
   }, [map, onLocationFound]);
-  return null;
-}
-
-function MapClickHandler({ onMapClick }: { onMapClick: (lat: number, lng: number) => void }) {
-  useMapEvents({
-    click(e) {
-      onMapClick(e.latlng.lat, e.latlng.lng);
-    },
-  });
   return null;
 }
 
@@ -193,12 +184,6 @@ export default function MapView() {
     }
   };
 
-  const handleMapLocationUpdate = (lat: number, lng: number) => {
-    const coords: [number, number] = [lat, lng];
-    setUserLocation(coords);
-    fetchLocationName(lat, lng);
-  };
-
   // Continuous real-time GPS location watching
   useEffect(() => {
     let watchId: number;
@@ -292,7 +277,6 @@ export default function MapView() {
       <MapContainer center={mapCenter} zoom={13} className="w-full h-full z-0">
         <RecenterMap center={mapCenter} />
         <LeafletLocationBinder onLocationFound={handleLocationFound} />
-        <MapClickHandler onMapClick={handleMapLocationUpdate} />
         <TileLayer
           attribution={TILE_LAYERS[mapType].attribution}
           url={TILE_LAYERS[mapType].url}
@@ -319,14 +303,7 @@ export default function MapView() {
             <Marker 
               position={userLocation} 
               icon={createGoogleUserDotIcon()}
-              draggable={true}
-              eventHandlers={{
-                dragend: (e) => {
-                  const marker = e.target;
-                  const pos = marker.getLatLng();
-                  handleMapLocationUpdate(pos.lat, pos.lng);
-                }
-              }}
+              draggable={false}
             >
               <Popup>
                 <div className="font-bold text-blue-600 flex items-center gap-1.5">
