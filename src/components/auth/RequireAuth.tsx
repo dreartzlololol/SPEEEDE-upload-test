@@ -15,7 +15,7 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
       if (!isTutorialActive) {
         showAuthModal();
       }
-      
+
       // Redirect to home/feed instead of staying on the protected route
       navigate('/feed', { replace: true, state: { from: location } });
     }
@@ -25,4 +25,5 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
   // Otherwise render nothing (or a loader) while the redirect happens
   return user ? children : null;
 }
+
 
