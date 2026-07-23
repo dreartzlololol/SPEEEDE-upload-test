@@ -88,7 +88,6 @@ export default function Navbar() {
   const handleAcceptFriend = async (notif: any) => {
     if (!user) return;
     const senderEmail = notif.data?.senderEmail;
-    const senderName = notif.data?.senderName || 'Someone';
     if (!senderEmail) return;
 
     try {

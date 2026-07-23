@@ -491,7 +491,7 @@ export default function Chat() {
                   >
                     <div className="relative shrink-0">
                       <img src={friend.avatar} className="w-12 h-12 rounded-full bg-gray-100" alt={friend.name} />
-                      {friend.online && (
+                      {(friend as any).online && (
                         <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 rounded-full border-2 border-white dark:border-speede-darkGray"></div>
                       )}
                     </div>
@@ -531,6 +531,7 @@ export default function Chat() {
                       </button>
                       <button
                         onClick={async () => {
+                          if (!user) return;
                           if (confirm(isTh ? `คุณแน่ใจหรือไม่ที่จะลบ ${friend.name} ออกจากเพื่อน?` : `Are you sure you want to remove ${friend.name} from friends?`)) {
                             const currentFriends = user.friends || [];
                             const updatedFriends = currentFriends.filter(e => e !== friend.email.toLowerCase());
