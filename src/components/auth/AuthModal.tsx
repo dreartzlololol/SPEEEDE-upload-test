@@ -89,8 +89,20 @@ export function AuthModal() {
           <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-xl text-sm font-medium dark:bg-red-900/30 dark:border-red-900 dark:text-red-400">
-                  {error}
+                <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-xl text-sm font-medium dark:bg-red-900/30 dark:border-red-900 dark:text-red-400 flex flex-col gap-1">
+                  <span>{error}</span>
+                  {(error.includes('already registered') || error.includes('ถูกลงทะเบียน')) && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setError('');
+                        setMode('login');
+                      }}
+                      className="text-xs text-speede-red dark:text-red-300 font-bold underline text-left hover:opacity-80 mt-1"
+                    >
+                      {isTh ? '👉 คลิกที่นี่เพื่อเข้าสู่ระบบด้วยอีเมลนี้' : '👉 Click here to log in with this email'}
+                    </button>
+                  )}
                 </div>
               )}
 

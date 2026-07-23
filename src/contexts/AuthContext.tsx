@@ -109,16 +109,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       soundEffects.play('failure', theme, language);
       let errMsg = language === 'th' ? 'การลงทะเบียนล้มเหลว' : 'Registration failed';
       try {
-        const errText = await response.text();
-        if (errText) {
-          const errData = JSON.parse(errText);
-          if (errData.error === 'Email already registered') {
+        const errData = await response.json();
+        if (errData && errData.error) {
+          if (errData.error.includes('already registered')) {
             errMsg = language === 'th' ? 'อีเมลนี้ถูกลงทะเบียนไปแล้ว กรุณาเข้าสู่ระบบ' : 'Email is already registered. Please log in.';
           } else {
-            errMsg = errData.error || errMsg;
+            errMsg = errData.error;
           }
         }
-      } catch (_) { /* ignore JSON parse errors */ }
+      } catch (_) { /* fallback if response is not JSON */ }
       throw new Error(errMsg);
 
     } catch (err: any) {
