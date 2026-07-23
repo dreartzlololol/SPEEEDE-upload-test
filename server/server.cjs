@@ -89,20 +89,24 @@ app.post('/api/auth/register', (req, res) => {
     return res.status(400).json({ error: 'Email, password, and name are required' });
   }
 
+  const cleanEmail = email.trim().toLowerCase();
+  const cleanName = name.trim();
+  const cleanPhone = phone ? phone.trim() : '';
+
   const accounts = readData(USERS_FILE, seedAccounts);
-  if (accounts.some(a => a.profile.email.toLowerCase() === email.toLowerCase())) {
+  if (accounts.some(a => a.profile.email.trim().toLowerCase() === cleanEmail)) {
     return res.status(400).json({ error: 'Email already registered' });
   }
 
   const newUser = {
-    name,
-    email,
-    phone: phone || '',
-    avatar: '',
+    name: cleanName,
+    email: cleanEmail,
+    phone: cleanPhone,
+    avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(cleanName)}`,
     bio: '',
     skills: [],
     completedJobs: 0,
-    rating: 0,
+    rating: 5.0,
     reviews: [],
     isAdmin: false,
   };

@@ -16,7 +16,7 @@ export default function Register() {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-  const [isHuman, setIsHuman] = useState(false);
+  const [isHuman, setIsHuman] = useState(true);
   const navigate = useNavigate();
   const { register } = useAuth();
 

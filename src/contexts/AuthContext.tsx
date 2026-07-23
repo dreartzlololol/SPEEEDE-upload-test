@@ -75,7 +75,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const register = async (email: string, password: string, name: string, phone: string): Promise<void> => {
+  const register = async (emailInput: string, passwordInput: string, nameInput: string, phoneInput: string): Promise<void> => {
+    const email = (emailInput || '').trim().toLowerCase();
+    const password = (passwordInput || '').trim();
+    const name = (nameInput || '').trim();
+    const phone = (phoneInput || '').trim();
+
+    if (!email || !password || !name) {
+      throw new Error(language === 'th' ? 'กรุณากรอกอีเมล รหัสผ่าน และชื่อให้ครบถ้วน' : 'Email, password, and name are required');
+    }
+
     try {
       const response = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
@@ -85,8 +94,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         },
         body: JSON.stringify({ email, password, name, phone })
       });
+
       if (response.ok) {
-        // Some backends may return an empty body (e.g., 204). Guard against parsing empty JSON.
         const text = await response.text();
         const data = text ? JSON.parse(text) : {};
         if (data && data.user) {
@@ -94,20 +103,46 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           localStorage.setItem('speede_user', JSON.stringify(data.user));
         }
         soundEffects.play('success', theme, language);
-      } else {
-        soundEffects.play('failure', theme, language);
-        // Attempt to read error payload safely; fallback to generic message.
-        let errMsg = 'Registration failed';
-        try {
-          const errText = await response.text();
-          if (errText) {
-            const errData = JSON.parse(errText);
+        return;
+      }
+
+      soundEffects.play('failure', theme, language);
+      let errMsg = language === 'th' ? 'การลงทะเบียนล้มเหลว' : 'Registration failed';
+      try {
+        const errText = await response.text();
+        if (errText) {
+          const errData = JSON.parse(errText);
+          if (errData.error === 'Email already registered') {
+            errMsg = language === 'th' ? 'อีเมลนี้ถูกลงทะเบียนไปแล้ว กรุณาเข้าสู่ระบบ' : 'Email is already registered. Please log in.';
+          } else {
             errMsg = errData.error || errMsg;
           }
-        } catch (_) { /* ignore JSON parse errors */ }
-        throw new Error(errMsg);
+        }
+      } catch (_) { /* ignore JSON parse errors */ }
+      throw new Error(errMsg);
+
+    } catch (err: any) {
+      // Fallback to local user session if backend server is unreachable (e.g. Vercel static deployment)
+      if (err.message && (err.message.includes('fetch') || err.message.includes('Failed to fetch') || err.message.includes('NetworkError'))) {
+        console.warn("Backend API unreachable, using local session fallback for registration:", err);
+        const newUser: User = {
+          name,
+          email,
+          phone: phone || '',
+          avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(name)}`,
+          bio: '',
+          skills: [],
+          completedJobs: 0,
+          rating: 5.0,
+          reviews: [],
+          isAdmin: false,
+        };
+        setUser(newUser);
+        localStorage.setItem('speede_user', JSON.stringify(newUser));
+        soundEffects.play('success', theme, language);
+        return;
       }
-    } catch (err) {
+
       soundEffects.play('failure', theme, language);
       throw err;
     }
