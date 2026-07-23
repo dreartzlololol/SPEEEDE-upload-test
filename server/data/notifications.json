@@ -1,5 +1,61 @@
 [
   {
+    "id": "notif-1782978943576-rw82nsegf",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "ยอมรับคำขอเป็นเพื่อน 🤝",
+    "message": "pobpetch ยอมรับคำขอเป็นเพื่อนของคุณแล้ว!",
+    "type": "success",
+    "timestamp": "2026-07-02T07:55:43.576Z",
+    "read": false,
+    "data": {
+      "type": "friend_accepted",
+      "senderEmail": "petchpobpob@gmail.com",
+      "senderName": "pobpetch"
+    }
+  },
+  {
+    "id": "notif-1782978929493-hqwt6inel",
+    "userEmail": "petchpobpob@gmail.com",
+    "title": "คำขอเป็นเพื่อน 🤝",
+    "message": "petchpobaaa ส่งคำขอเป็นเพื่อนถึงคุณ",
+    "type": "info",
+    "timestamp": "2026-07-02T07:55:29.493Z",
+    "read": true,
+    "data": {
+      "type": "friend_request",
+      "senderEmail": "janyamonnuamnoo@gmail.com",
+      "senderName": "petchpobaaa"
+    }
+  },
+  {
+    "id": "notif-1782977957804-jlo0isg3k",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "ยอมรับคำขอเป็นเพื่อน 🤝",
+    "message": "pobpetch ยอมรับคำขอเป็นเพื่อนของคุณแล้ว!",
+    "type": "success",
+    "timestamp": "2026-07-02T07:39:17.804Z",
+    "read": false,
+    "data": {
+      "type": "friend_accepted",
+      "senderEmail": "petchpobpob@gmail.com",
+      "senderName": "pobpetch"
+    }
+  },
+  {
+    "id": "notif-1782977911164-05cgghe3i",
+    "userEmail": "petchpobpob@gmail.com",
+    "title": "คำขอเป็นเพื่อน 🤝",
+    "message": "petchpobaaa ส่งคำขอเป็นเพื่อนถึงคุณ",
+    "type": "info",
+    "timestamp": "2026-07-02T07:38:31.164Z",
+    "read": true,
+    "data": {
+      "type": "friend_request",
+      "senderEmail": "janyamonnuamnoo@gmail.com",
+      "senderName": "petchpobaaa"
+    }
+  },
+  {
     "id": "notif-1780889601209-29kqu8r00",
     "userEmail": "petchpobaaa@speede.com",
     "title": "Worker abandoned job ⚠️",

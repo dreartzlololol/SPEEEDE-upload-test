@@ -31,7 +31,7 @@ const defaultPrimaryColor = '#E60023';
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined);
 
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const [theme, setThemeState] = useState<Theme>('light');
+  const [theme, setThemeState] = useState<Theme>('dark');
   const [language, setLanguageState] = useState<Language>('th');
   const [primaryColor, setPrimaryColorState] = useState(defaultPrimaryColor);
   const [currency, setCurrencyState] = useState<'THB' | 'USD'>('THB');

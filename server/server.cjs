@@ -5,9 +5,16 @@ const path = require('path');
 
 const app = express();
 const PORT = 5000;
+const serverStartId = Date.now().toString() + Math.random().toString();
 
 // Enable CORS
 app.use(cors());
+
+// Serve server start info
+app.get('/api/server-info', (req, res) => {
+  res.json({ serverStartId });
+});
+
 
 // Support JSON bodies up to 50MB (for base64 image uploads)
 app.use(express.json({ limit: '50mb' }));

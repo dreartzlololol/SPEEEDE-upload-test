@@ -1,23 +1,28 @@
 import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useTutorial } from '@/contexts/TutorialContext';
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
   const { user, showAuthModal } = useAuth();
+  const { isActive: isTutorialActive } = useTutorial();
   const navigate = useNavigate();
   const location = useLocation();
 
   useEffect(() => {
     if (!user) {
-      // Show the auth modal
-      showAuthModal();
+      // Show the auth modal only if tutorial is not active
+      if (!isTutorialActive) {
+        showAuthModal();
+      }
       
       // Redirect to home/feed instead of staying on the protected route
       navigate('/feed', { replace: true, state: { from: location } });
     }
-  }, [user, navigate, showAuthModal, location]);
+  }, [user, navigate, showAuthModal, location, isTutorialActive]);
 
   // If there's a user, render the children (the protected page)
   // Otherwise render nothing (or a loader) while the redirect happens
   return user ? children : null;
 }
+

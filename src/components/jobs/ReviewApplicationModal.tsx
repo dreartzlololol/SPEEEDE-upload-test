@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import { X, Check, XCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { useJobs, Application } from '@/contexts/JobContext';
@@ -28,7 +29,7 @@ export function ReviewApplicationModal({ application, onClose, onSuccess }: Revi
     }
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
       <motion.div
         initial={{ opacity: 0, scale: 0.95, y: 20 }}
@@ -105,6 +106,7 @@ export function ReviewApplicationModal({ application, onClose, onSuccess }: Revi
           </Button>
         </div>
       </motion.div>
-    </div>
+    </div>,
+    document.body
   );
 }

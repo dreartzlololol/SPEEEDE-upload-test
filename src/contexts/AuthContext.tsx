@@ -14,6 +14,8 @@ export type User = {
   rating: number;
   reviews: any[];
   isAdmin?: boolean;
+  friends?: string[];
+  friendTags?: Record<string, string[]>;
 };
 
 interface AuthContextType {

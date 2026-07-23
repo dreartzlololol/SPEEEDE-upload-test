@@ -234,14 +234,16 @@ export default function Settings() {
             >
               ภาษาไทย (Thai)
             </button>
-            <button
-              onClick={() => setLanguage('brainrot')}
-              className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold tracking-tight ${
-                language === 'brainrot' ? 'border-speede-red bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white border-transparent' : 'border-gray-100 dark:border-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800'
-              }`}
-            >
-              Gen Z 💀
-            </button>
+            {user && (
+              <button
+                onClick={() => setLanguage('brainrot')}
+                className={`flex-1 py-3 rounded-2xl border-2 transition-all font-bold tracking-tight ${
+                  language === 'brainrot' ? 'border-speede-red bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white border-transparent' : 'border-gray-100 dark:border-gray-800 text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-800'
+                }`}
+              >
+                Gen Z 💀
+              </button>
+            )}
           </CardContent>
         </Card>
       </section>

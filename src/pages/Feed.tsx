@@ -369,6 +369,10 @@ export default function Feed() {
             job={detailedJob} 
             onClose={() => setDetailedJob(null)}
             onApply={() => {
+              if (!user) {
+                showAuthModal();
+                return;
+              }
               setDetailedJob(null);
               setSelectedJob(detailedJob);
             }}

@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
 import { X, MapPin, Clock, Star, ShieldCheck, Briefcase } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Job } from '@/contexts/JobContext';
@@ -12,8 +14,22 @@ interface JobDetailsModalProps {
 
 export function JobDetailsModal({ job, onClose, onApply }: JobDetailsModalProps) {
   const { language } = useSettings();
+  const navigate = useNavigate();
   const isTh = language === 'th';
   const isRot = language === 'brainrot';
+
+  const handleEmployerClick = () => {
+    const employerEmail = job.employerEmail || `${job.employer.toLowerCase().replace(/\s+/g, '')}@speede.com`;
+    onClose();
+    navigate('/chat', {
+      state: {
+        startChatWith: {
+          email: employerEmail,
+          name: job.employer
+        }
+      }
+    });
+  };
 
   // Mock Employer Data based on job.employer
   const mockEmployerStats = {
@@ -31,7 +47,7 @@ export function JobDetailsModal({ job, onClose, onApply }: JobDetailsModalProps)
     ]
   };
 
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-[90] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black/60 backdrop-blur-sm">
       <motion.div
         initial={{ opacity: 0, y: 100 }}
@@ -94,17 +110,27 @@ export function JobDetailsModal({ job, onClose, onApply }: JobDetailsModalProps)
               </h3>
               
               <div className="flex gap-4 items-start">
-                <div className="relative shrink-0">
-                  <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden border-2 border-white dark:border-speede-darkGray shadow-sm">
+                <div 
+                  onClick={handleEmployerClick}
+                  className="relative shrink-0 cursor-pointer group"
+                  title={isTh ? 'ส่งข้อความหาผู้จ้าง' : 'Message Employer'}
+                >
+                  <div className="w-16 h-16 bg-gray-200 rounded-full overflow-hidden border-2 border-white dark:border-speede-darkGray shadow-sm group-hover:opacity-90 group-hover:scale-[1.02] transition-all">
                     <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${job.employer}`} alt="avatar" className="w-full h-full" />
                   </div>
-                  <div className="absolute -bottom-1 -right-1 bg-blue-500 text-white rounded-full p-1 border-2 border-white dark:border-speede-darkGray">
+                  <div className="absolute -bottom-1 -right-1 bg-blue-500 text-white rounded-full p-1 border-2 border-white dark:border-speede-gray-800">
                     <ShieldCheck className="w-3 h-3" />
                   </div>
                 </div>
 
                 <div className="flex-1 min-w-0">
-                  <h4 className="font-bold text-lg dark:text-white truncate">{job.employer}</h4>
+                  <h4 
+                    onClick={handleEmployerClick}
+                    className="font-bold text-lg dark:text-white truncate cursor-pointer hover:text-theme-primary transition-colors inline-block animate-pulse-subtle"
+                    title={isTh ? 'ส่งข้อความหาผู้จ้าง' : 'Message Employer'}
+                  >
+                    {job.employer}
+                  </h4>
                   <div className="flex items-center gap-3 text-sm text-gray-500 dark:text-gray-400 mt-1">
                     <div className="flex items-center text-yellow-500 font-bold">
                       <Star className="w-4 h-4 fill-current mr-1" /> {job.employerRating}
@@ -152,6 +178,7 @@ export function JobDetailsModal({ job, onClose, onApply }: JobDetailsModalProps)
         </div>
 
       </motion.div>
-    </div>
+    </div>,
+    document.body
   );
 }

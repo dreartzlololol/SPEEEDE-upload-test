@@ -281,9 +281,6 @@ export function TutorialOverlay() {
                 <button onClick={() => setLangAndNext('en')} className="py-3 px-4 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent hover:border-blue-500 hover:bg-blue-500/5 font-bold transition-all text-gray-800 dark:text-gray-200">
                   🇬🇧 English
                 </button>
-                <button onClick={() => setLangAndNext('brainrot')} className="py-3 px-4 rounded-xl bg-gray-50 dark:bg-gray-800 border-2 border-transparent hover:border-purple-500 hover:bg-purple-500/5 font-bold transition-all text-gray-800 dark:text-gray-200">
-                  💀 Gen Z / Brainrot
-                </button>
               </div>
             ) : (
               <button 

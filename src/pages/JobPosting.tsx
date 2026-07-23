@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Camera, MapPin, DollarSign, Map as MapIcon, Copy, Check } from 'lucide-react';
+import { Camera, MapPin, DollarSign, Map as MapIcon, Copy, Check, Navigation } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
@@ -7,9 +7,17 @@ import { useJobs } from '@/contexts/JobContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { useSettings } from '@/contexts/SettingsContext';
-import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import { createCustomIcon } from '@/lib/mapIcon';
 import { PageTransition } from '@/components/ui/PageTransition';
+
+function RecenterMap({ center }: { center: [number, number] }) {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, map.getZoom());
+  }, [center, map]);
+  return null;
+}
 
 function LocationMarker({ position, setPosition, onLocationSelect }: { position: [number, number], setPosition: (pos: [number, number]) => void, onLocationSelect: (lat: number, lng: number) => void }) {
   useMapEvents({
@@ -50,7 +58,36 @@ export default function JobPosting() {
   const [copied, setCopied] = useState(false);
 
   // Default coordinate center (Photharam)
-  const [coordinates, setCoordinates] = useState<[number, number]>([13.6922, 99.8536]);
+  const defaultCenter: [number, number] = [13.6922, 99.8536];
+  const [coordinates, setCoordinates] = useState<[number, number]>(defaultCenter);
+  const [mapCenter, setMapCenter] = useState<[number, number]>(defaultCenter);
+
+  const handleLocateMe = () => {
+    if (!navigator.geolocation) {
+      alert(isRot ? "No GPS found on your rig." : isTh ? "เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่ง" : "Geolocation is not supported by your browser.");
+      return;
+    }
+    setIsGeocoding(true);
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+        setCoordinates([lat, lng]);
+        setMapCenter([lat, lng]);
+        handleLocationSelect(lat, lng);
+      },
+      (error) => {
+        console.warn("Could not determine real location:", error);
+        setIsGeocoding(false);
+      },
+      { enableHighAccuracy: true, timeout: 10000 }
+    );
+  };
+
+  useEffect(() => {
+    // Attempt auto-detecting real-life location on load
+    handleLocateMe();
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -281,12 +318,23 @@ export default function JobPosting() {
               </label>
               <p className="text-xs text-gray-500">{isRot ? 'Tap anywhere on the map to set the exact job location.' : isTh ? 'แตะที่ใดก็ได้บนแผนที่เพื่อกำหนดตำแหน่งของงาน' : 'Tap anywhere on the map to set the exact job location.'}</p>
               <div className="w-full h-48 rounded-2xl overflow-hidden border border-gray-200 dark:border-gray-800 z-0 relative">
-                <MapContainer center={[13.6922, 99.8536]} zoom={14} className="w-full h-full z-0">
+                <MapContainer center={mapCenter} zoom={14} className="w-full h-full z-0">
+                  <RecenterMap center={mapCenter} />
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                   />
                   <LocationMarker position={coordinates} setPosition={setCoordinates} onLocationSelect={handleLocationSelect} />
                 </MapContainer>
+                
+                {/* Locate Me button */}
+                <button
+                  type="button"
+                  onClick={handleLocateMe}
+                  className="absolute bottom-3 right-3 z-[400] bg-white/90 dark:bg-speede-darkGray/90 backdrop-blur-md p-2.5 rounded-full shadow-lg border border-gray-100 dark:border-gray-800 hover:scale-105 transition-all text-speede-red dark:text-red-400"
+                  title="Use my real-life location"
+                >
+                  <Navigation className="w-4 h-4 fill-current" />
+                </button>
               </div>
             </div>
 

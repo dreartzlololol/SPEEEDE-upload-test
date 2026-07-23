@@ -2,17 +2,17 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
 import { Download, Bell, Settings as SettingsIcon } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth, User } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
 import { Application } from '@/contexts/JobContext';
 import { ReviewApplicationModal } from '@/components/jobs/ReviewApplicationModal';
 import { AnimatePresence, motion } from 'framer-motion';
 import { InvincibleEasterEgg } from '@/components/ui/InvincibleEasterEgg';
 import { soundEffects } from '@/lib/soundEffects';
-import { useNotifications } from '@/contexts/NotificationContext';
+import { useNotifications, pushNotificationToUser } from '@/contexts/NotificationContext';
 
 export default function Navbar() {
-  const { user, showAuthModal } = useAuth();
+  const { user, showAuthModal, updateUser } = useAuth();
   const { theme, language } = useSettings();
   const { notifications, unreadCount, markAsRead, markAllAsRead, clearAll, addNotification } = useNotifications();
   const navigate = useNavigate();
@@ -84,6 +84,69 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const handleAcceptFriend = async (notif: any) => {
+    if (!user) return;
+    const senderEmail = notif.data?.senderEmail;
+    const senderName = notif.data?.senderName || 'Someone';
+    if (!senderEmail) return;
+
+    try {
+      // 1. Update current user's friends list
+      const currentFriends = user.friends || [];
+      if (!currentFriends.includes(senderEmail)) {
+        await updateUser({ friends: [...currentFriends, senderEmail] });
+      }
+
+      // 2. Fetch sender's profile to get their current friends list
+      const resUsers = await fetch('/api/users', { headers: { 'bypass-tunnel-reminder': 'true' } });
+      if (resUsers.ok) {
+        const users: User[] = await resUsers.json();
+        const senderUser = users.find(u => u.email.toLowerCase() === senderEmail.toLowerCase());
+        const senderFriends = senderUser?.friends || [];
+        if (!senderFriends.includes(user.email)) {
+          // Update sender's friends list
+          await fetch('/api/auth/update', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'bypass-tunnel-reminder': 'true'
+            },
+            body: JSON.stringify({ 
+              email: senderEmail, 
+              updates: { friends: [...senderFriends, user.email] } 
+            })
+          });
+        }
+      }
+
+      // 3. Mark notification as read
+      await markAsRead(notif.id);
+
+      // 4. Send notification back to sender
+      await pushNotificationToUser(
+        senderEmail,
+        isTh ? 'ยอมรับคำขอเป็นเพื่อน 🤝' : 'Friend Request Accepted 🤝',
+        isTh ? `${user.name} ยอมรับคำขอเป็นเพื่อนของคุณแล้ว!` : `${user.name} accepted your friend request!`,
+        'success',
+        undefined,
+        { type: 'friend_accepted', senderEmail: user.email, senderName: user.name }
+      );
+
+      soundEffects.play('success', theme, language);
+    } catch (err) {
+      console.error('Failed to accept friend request:', err);
+    }
+  };
+
+  const handleDeclineFriend = async (notif: any) => {
+    try {
+      await markAsRead(notif.id);
+      soundEffects.play('click', theme, language);
+    } catch (err) {
+      console.error('Failed to decline friend request:', err);
+    }
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 h-20 theme-panel !rounded-none !border-t-0 !border-l-0 !border-r-0 z-50 px-4 sm:px-6 lg:px-8">
@@ -197,6 +260,9 @@ export default function Navbar() {
                             'border-l-gray-300 dark:border-l-gray-700'
                           }`}
                           onClick={() => {
+                            if (n.data && n.data.type === 'friend_request' && !n.read) {
+                              return;
+                            }
                             soundEffects.play('click', theme, language);
                             markAsRead(n.id);
                             setShowNotifications(false);
@@ -216,6 +282,25 @@ export default function Navbar() {
                           <p className="text-sm dark:text-white mt-0.5 leading-snug">
                             {n.message}
                           </p>
+
+                          {/* Accept/Decline Buttons for Friend Request */}
+                          {n.data && n.data.type === 'friend_request' && !n.read && (
+                            <div className="flex gap-2 mt-2.5 mb-1" onClick={(e) => e.stopPropagation()}>
+                              <button 
+                                onClick={() => handleAcceptFriend(n)}
+                                className="px-3 py-1 bg-green-500 hover:bg-green-600 text-white text-xs font-bold rounded-lg transition-colors shadow-sm"
+                              >
+                                {isTh ? 'ยอมรับ' : 'Accept'}
+                              </button>
+                              <button 
+                                onClick={() => handleDeclineFriend(n)}
+                                className="px-3 py-1 bg-gray-100 hover:bg-gray-250 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs font-bold rounded-lg transition-colors border border-theme-border-color"
+                              >
+                                {isTh ? 'ปฏิเสธ' : 'Decline'}
+                              </button>
+                            </div>
+                          )}
+
                           <p className="text-[10px] text-gray-400 mt-1">
                             {new Date(n.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                           </p>
