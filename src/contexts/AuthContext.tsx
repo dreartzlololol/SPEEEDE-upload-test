@@ -107,17 +107,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
 
       soundEffects.play('failure', theme, language);
-      let errMsg = language === 'th' ? 'การลงทะเบียนล้มเหลว' : 'Registration failed';
+      let errMsg = '';
       try {
         const errData = await response.json();
         if (errData && errData.error) {
-          if (errData.error.includes('already registered')) {
-            errMsg = language === 'th' ? 'อีเมลนี้ถูกลงทะเบียนไปแล้ว กรุณาเข้าสู่ระบบ' : 'Email is already registered. Please log in.';
+          const rawErr = errData.error.toLowerCase();
+          if (rawErr.includes('already registered') || rawErr.includes('already exists') || rawErr.includes('email')) {
+            errMsg = language === 'th' 
+              ? 'อีเมลนี้ถูกลงทะเบียนไปแล้ว กรุณาเข้าสู่ระบบด้วยอีเมลนี้' 
+              : 'This email is already registered. Please log in instead.';
+          } else if (rawErr.includes('required')) {
+            errMsg = language === 'th'
+              ? 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน (ชื่อ, อีเมล, รหัสผ่าน)'
+              : 'Please fill in all required fields (Name, Email, Password).';
           } else {
             errMsg = errData.error;
           }
         }
       } catch (_) { /* fallback if response is not JSON */ }
+
+      if (!errMsg) {
+        errMsg = language === 'th' ? 'อีเมลนี้ถูกลงทะเบียนใช้งานแล้ว กรุณาเข้าสู่ระบบ' : 'Email is already registered. Please log in.';
+      }
       throw new Error(errMsg);
 
     } catch (err: any) {

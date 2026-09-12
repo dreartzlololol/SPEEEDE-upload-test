@@ -89,18 +89,21 @@ export function AuthModal() {
           <div className="p-6">
             <form onSubmit={handleSubmit} className="space-y-4">
               {error && (
-                <div className="p-3 bg-red-50 text-red-600 border border-red-200 rounded-xl text-sm font-medium dark:bg-red-900/30 dark:border-red-900 dark:text-red-400 flex flex-col gap-1">
-                  <span>{error}</span>
-                  {(error.includes('already registered') || error.includes('ถูกลงทะเบียน')) && (
+                <div className="p-3.5 bg-red-50 text-red-600 border border-red-200 rounded-2xl text-sm font-medium dark:bg-red-900/30 dark:border-red-900 dark:text-red-400 flex flex-col gap-1.5 shadow-sm">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold">⚠️</span>
+                    <span>{error}</span>
+                  </div>
+                  {(error.includes('already registered') || error.includes('ถูกลงทะเบียน') || error.includes('เข้าสู่ระบบ')) && (
                     <button
                       type="button"
                       onClick={() => {
                         setError('');
                         setMode('login');
                       }}
-                      className="text-xs text-speede-red dark:text-red-300 font-bold underline text-left hover:opacity-80 mt-1"
+                      className="text-xs text-speede-red dark:text-red-300 font-bold underline text-left hover:opacity-80 mt-1 flex items-center gap-1"
                     >
-                      {isTh ? '👉 คลิกที่นี่เพื่อเข้าสู่ระบบด้วยอีเมลนี้' : '👉 Click here to log in with this email'}
+                      <span>👉 {isTh ? 'คลิกที่นี่เพื่อสลับหน้าและเข้าสู่ระบบด้วยอีเมลนี้' : 'Click here to switch and Sign In with this email'}</span>
                     </button>
                   )}
                 </div>
