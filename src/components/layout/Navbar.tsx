@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/Button';
-import { Download, Bell, Settings as SettingsIcon } from 'lucide-react';
+import { Download, Bell, Settings as SettingsIcon, UserPlus, Users } from 'lucide-react';
 import { useAuth, User } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
 import { Application } from '@/contexts/JobContext';
 import { ReviewApplicationModal } from '@/components/jobs/ReviewApplicationModal';
+import { UserSearchModal } from '@/components/user/UserSearchModal';
 import { AnimatePresence, motion } from 'framer-motion';
 import { InvincibleEasterEgg } from '@/components/ui/InvincibleEasterEgg';
 import { soundEffects } from '@/lib/soundEffects';
@@ -18,6 +19,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showUserSearchModal, setShowUserSearchModal] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [logoClickCount, setLogoClickCount] = useState(0);
@@ -173,44 +175,56 @@ export default function Navbar() {
           )}
         </motion.div>
         
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link id="tutorial-desktop-feed" to="/feed" onClick={() => soundEffects.play('click', theme, language)} className="text-sm font-bold theme-panel rounded-full px-4 py-1.5 hover:bg-theme-secondary/20 transition-all select-none">
+        <nav className="hidden md:flex items-center space-x-3 lg:space-x-4">
+          <Button variant="secondary" size="sm" id="tutorial-desktop-feed" onClick={() => { soundEffects.play('click', theme, language); navigate('/feed'); }} className="select-none px-3.5">
             {isRot ? 'Side Quests' : isTh ? 'งาน' : 'Jobs'}
-          </Link>
-          <Link id="tutorial-desktop-map" to="/map" onClick={() => soundEffects.play('click', theme, language)} className="text-sm font-bold theme-panel rounded-full px-4 py-1.5 hover:bg-theme-secondary/20 transition-all select-none">
+          </Button>
+          <Button variant="secondary" size="sm" id="tutorial-desktop-map" onClick={() => { soundEffects.play('click', theme, language); navigate('/map'); }} className="select-none px-3.5">
             {isRot ? 'The Ends' : isTh ? 'แผนที่' : 'Map'}
-          </Link>
-          <Link id="tutorial-desktop-post" to={user ? "/post-job" : "#"} onClick={(e) => {
+          </Button>
+          <Button variant="secondary" size="sm" id="tutorial-desktop-chat" onClick={() => {
             soundEffects.play('click', theme, language);
-            if (!user) { e.preventDefault(); showAuthModal(); }
-          }} className="text-sm font-bold theme-panel text-theme-primary rounded-full px-4 py-1.5 hover:bg-theme-primary/10 transition-all border-[var(--theme-border-width)] border-theme-primary/20 select-none">
-            {isRot ? 'Drop Quest' : isTh ? 'ลงประกาศงาน' : 'Post Job'}
-          </Link>
-          <Link id="tutorial-desktop-chat" to={user ? "/chat" : "#"} onClick={(e) => {
-            soundEffects.play('click', theme, language);
-            if (!user) { e.preventDefault(); showAuthModal(); }
-          }} className="text-sm font-bold theme-panel rounded-full px-4 py-1.5 hover:bg-theme-secondary/20 transition-all select-none">
+            if (!user) showAuthModal();
+            else navigate('/chat');
+          }} className="select-none px-3.5">
             {isRot ? 'Yapping' : isTh ? 'ข้อความ' : 'Messages'}
-          </Link>
+          </Button>
+          <Button variant="secondary" size="sm" id="tutorial-desktop-accounts" onClick={() => {
+            soundEffects.play('click', theme, language);
+            setShowUserSearchModal(true);
+          }} className="select-none px-3.5 flex items-center gap-1.5">
+            <Users className="w-4 h-4 text-theme-primary" />
+            {isRot ? 'Homies' : isTh ? 'ค้นหาบัญชี' : 'Accounts'}
+          </Button>
         </nav>
 
-        <div className="flex items-center space-x-4">
-          <Link id="tutorial-desktop-settings" to={user ? "/settings" : "#"} onClick={(e) => {
+        <div className="flex items-center space-x-2 sm:space-x-3">
+          <Button variant="secondary" size="sm" id="tutorial-desktop-accounts-icon" onClick={() => {
             soundEffects.play('click', theme, language);
-            if (!user) { e.preventDefault(); showAuthModal(); }
-          }} className="w-10 h-10 rounded-full theme-panel flex items-center justify-center text-theme-text hover:bg-theme-secondary/20 transition-all select-none">
+            setShowUserSearchModal(true);
+          }} className="md:hidden w-10 px-0 h-10 flex items-center justify-center select-none" title={isTh ? 'ค้นหาบัญชีผู้ใช้' : 'Search Accounts & Add Friends'}>
+            <UserPlus className="w-5 h-5 text-theme-primary" />
+          </Button>
+
+          <Button variant="secondary" size="sm" id="tutorial-desktop-settings" onClick={() => {
+            soundEffects.play('click', theme, language);
+            if (!user) showAuthModal();
+            else navigate('/settings');
+          }} className="w-10 px-0 h-10 flex items-center justify-center select-none">
             <SettingsIcon className="w-5 h-5" />
-          </Link>
+          </Button>
 
           {/* Notifications */}
           <div className="relative" ref={notificationRef}>
-            <button 
+            <Button 
+              variant="secondary"
+              size="sm"
               id="tutorial-desktop-notifications"
               onClick={() => {
                 soundEffects.play('click', theme, language);
                 setShowNotifications(!showNotifications);
               }}
-              className="relative w-10 h-10 rounded-full theme-panel flex items-center justify-center text-theme-text hover:bg-theme-secondary/20 transition-all p-0 select-none"
+              className="relative w-10 px-0 h-10 flex items-center justify-center select-none"
             >
               <Bell className="w-5 h-5" />
               {unreadCount > 0 && (
@@ -218,7 +232,7 @@ export default function Navbar() {
                   {unreadCount}
                 </span>
               )}
-            </button>
+            </Button>
 
             <AnimatePresence>
               {showNotifications && (
@@ -321,12 +335,11 @@ export default function Navbar() {
           </div>
           
           <Button 
-            variant="outline" 
             size="sm" 
-            className="hidden lg:flex items-center gap-2 rounded-full border-speede-red text-speede-red hover:bg-speede-red hover:text-white"
+            className="hidden lg:flex items-center gap-2 bg-red-500 text-white border-red-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]"
             onClick={handleDownload}
           >
-            <Download className="w-4 h-4" />
+            <Download className="w-4 h-4 text-white" />
             {isRot ? 'Get App no cap' : isTh ? 'โหลดแอป' : 'Download App'}
           </Button>
 
@@ -342,19 +355,20 @@ export default function Navbar() {
               </div>
             </Link>
           ) : (
-            <button onClick={() => {
+            <Button variant="secondary" size="sm" onClick={() => {
               soundEffects.play('click', theme, language);
               showAuthModal();
-            }} className="hidden sm:block text-sm font-medium dark:text-white ml-4 theme-panel rounded-full px-4 py-2 bg-white dark:bg-speede-darkGray cursor-pointer">
+            }} className="hidden sm:block ml-4">
               {isRot ? 'Identify Yourself' : isTh ? 'เข้าสู่ระบบ' : 'Sign in'}
-            </button>
+            </Button>
           )}
-          <Link to={user ? "/post-job" : "#"} onClick={(e) => {
+          <Button size="sm" className="hidden sm:flex ml-2" onClick={() => {
             soundEffects.play('click', theme, language);
-            if (!user) { e.preventDefault(); showAuthModal(); }
+            if (!user) showAuthModal();
+            else navigate('/post-job');
           }}>
-            <Button size="sm" className="hidden sm:flex ml-2">{isRot ? 'Drop a Quest' : isTh ? 'ลงประกาศงาน' : 'Post a Job'}</Button>
-          </Link>
+            {isRot ? 'Drop a Quest' : isTh ? 'ลงประกาศงาน' : 'Post a Job'}
+          </Button>
         </div>
       </div>
 
@@ -373,6 +387,11 @@ export default function Navbar() {
           <InvincibleEasterEgg onClose={() => setShowEasterEgg(false)} />
         )}
       </AnimatePresence>
+
+      <UserSearchModal 
+        isOpen={showUserSearchModal} 
+        onClose={() => setShowUserSearchModal(false)} 
+      />
     </header>
   );
 }

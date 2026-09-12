@@ -227,37 +227,13 @@
   }
   
   .theme-button {
-    background-color: var(--theme-primary);
-    color: #FFF; /* Most primary colors require white text */
-    border-width: var(--theme-border-width);
-    border-color: var(--theme-border-color);
-    border-style: var(--theme-border-style);
-    border-radius: var(--theme-border-radius);
-    box-shadow: var(--theme-shadow);
+    @apply cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px];
     font-family: var(--font-display);
-    transition: all 0.15s ease;
-  }
-
-  .theme-button:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--theme-shadow-hover);
-  }
-
-  .theme-button:active {
-    transform: translateY(2px);
-    box-shadow: var(--theme-shadow-active);
   }
 
   .theme-button-secondary {
-    background-color: var(--theme-secondary);
-    color: var(--theme-text);
-    border-width: var(--theme-border-width);
-    border-color: var(--theme-border-color);
-    border-style: var(--theme-border-style);
-    border-radius: var(--theme-border-radius);
-    box-shadow: var(--theme-shadow);
+    @apply cursor-pointer transition-all bg-gray-700 text-white px-6 py-2 rounded-lg border-gray-800 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px];
     font-family: var(--font-display);
-    transition: all 0.15s ease;
   }
 
   .theme-input {

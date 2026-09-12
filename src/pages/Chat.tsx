@@ -712,21 +712,24 @@ export default function Chat() {
             displayedMessages.length === 0 && "flex flex-col items-center justify-center"
           )}>
             {displayedMessages.length > 0 ? (
-              displayedMessages.map(m => (
-                <div 
+              displayedMessages.map((m, index) => (
+                <motion.div 
                   key={m.id} 
+                  initial={{ opacity: 0, scale: 0.9, y: 15 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={{ type: 'spring', stiffness: 450, damping: 25, delay: Math.min(index * 0.03, 0.3) }}
                   className={clsx(
-                    "flex flex-col max-w-[70%] rounded-2xl p-3 border border-theme-border-color shrink-0", 
-                    m.sender === 'me' ? "ml-auto" : "mr-auto"
+                    "flex flex-col max-w-[70%] rounded-2xl p-3 border border-theme-border-color shrink-0 shadow-sm", 
+                    m.sender === 'me' ? "ml-auto rounded-br-xs" : "mr-auto rounded-bl-xs"
                   )}
                   style={{
                     backgroundColor: m.sender === 'me' ? 'var(--theme-primary)' : 'var(--theme-secondary)',
                     color: m.sender === 'me' ? '#FFFFFF' : 'var(--theme-text)'
                   }}
                 >
-                  <p className="text-sm">{m.text}</p>
+                  <p className="text-sm leading-relaxed">{m.text}</p>
                   <span className="text-[10px] opacity-75 mt-1 self-end">{m.time}</span>
-                </div>
+                </motion.div>
               ))
             ) : (
               <div className="text-center p-6 space-y-3">

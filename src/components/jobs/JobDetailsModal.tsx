@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/Button';
 import { Job } from '@/contexts/JobContext';
 import { useSettings } from '@/contexts/SettingsContext';
 
+import { formatSalaryWithCurrency } from '@/utils/cn';
+
 interface JobDetailsModalProps {
   job: Job;
   onClose: () => void;
@@ -77,8 +79,8 @@ export function JobDetailsModal({ job, onClose, onApply }: JobDetailsModalProps)
             <div>
               <div className="flex justify-between items-start gap-4 mb-3">
                 <h1 className="text-2xl font-bold dark:text-white leading-tight">{job.title}</h1>
-                <div className="shrink-0 bg-speede-red/10 text-speede-red font-bold px-4 py-2 rounded-xl">
-                  {job.salary}
+                <div className="shrink-0 bg-gradient-to-r from-red-600 to-speede-red text-white font-extrabold px-4 py-2 rounded-2xl shadow-md text-base">
+                  {formatSalaryWithCurrency(job.salary)}
                 </div>
               </div>
 

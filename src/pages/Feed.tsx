@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Clock, Star, Filter, X, Zap } from 'lucide-react';
+import { Search, MapPin, Clock, Star, Filter, X, Zap, TrendingUp, Users, Sparkles, ChevronRight, MessageSquare } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useJobs, Job } from '@/contexts/JobContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { useSettings } from '@/contexts/SettingsContext';
@@ -11,8 +12,10 @@ import { Button } from '@/components/ui/Button';
 import { ApplicationModal } from '@/components/jobs/ApplicationModal';
 import { JobDetailsModal } from '@/components/jobs/JobDetailsModal';
 import { PageTransition } from '@/components/ui/PageTransition';
+import { formatSalaryWithCurrency } from '@/utils/cn';
 
 export default function Feed() {
+  const navigate = useNavigate();
   const { language, distanceUnit } = useSettings();
   const isTh = language === 'th';
   const isRot = language === 'brainrot';
@@ -131,8 +134,17 @@ export default function Feed() {
       return b.id - a.id;
     });
 
+  const visibleJobs = jobs.filter(j => !hiddenJobs.includes(j.id));
+  const urgentJobsCount = visibleJobs.filter(j => j.isUrgent).length;
+  const maxSalary = visibleJobs.length > 0 
+    ? Math.max(...visibleJobs.map(j => parseSalary(j.salary))) 
+    : 0;
+
   return (
-    <PageTransition className="pb-20 max-w-2xl mx-auto w-full">
+    <PageTransition className="pb-20 max-w-6xl mx-auto w-full">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Feed Column */}
+        <div className="lg:col-span-2 space-y-4">
       <div className="mb-6 space-y-4">
         <h1 className="text-3xl font-bold dark:text-white">{isRot ? 'Looking for Ops 👀' : isTh ? 'งานล่าสุด' : 'Find Jobs'}</h1>
         <div className="flex gap-2">
@@ -330,9 +342,11 @@ export default function Feed() {
                 <img src={job.image} alt={job.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
               </div>
               <CardContent className="p-4">
-                <div className="flex justify-between items-start mb-2 pr-10">
-                  <h3 className="text-lg font-bold dark:text-white line-clamp-1">{job.title}</h3>
-                  <span className="text-speede-red font-bold whitespace-nowrap ml-2">{job.salary}</span>
+                <div className="flex justify-between items-center mb-2 pr-10">
+                  <h3 className="text-lg font-bold dark:text-white line-clamp-1 flex-1">{job.title}</h3>
+                  <span className="px-3.5 py-1.5 bg-gradient-to-r from-red-600 to-speede-red text-white font-extrabold text-sm rounded-2xl shadow-md border border-red-500/30 whitespace-nowrap ml-3 shrink-0">
+                    {formatSalaryWithCurrency(job.salary)}
+                  </span>
                 </div>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-4 line-clamp-2">{job.description}</p>
                 
@@ -360,8 +374,120 @@ export default function Feed() {
               </CardContent>
             </Card>
           </motion.div>
-          )))}
+        ))
+      )}
+    </div>
+  </div>
+  {/* End Main Feed Column */}
+
+        {/* Desktop Right Sidebar (Visible on PC / lg screens) */}
+        <div className="hidden lg:block lg:col-span-1 space-y-6">
+          {/* Mini Live Map Card */}
+          <div className="theme-panel p-5 bg-white dark:bg-speede-darkGray border border-gray-100 dark:border-gray-800 rounded-3xl shadow-sm space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-blue-500/10 text-blue-500 flex items-center justify-center">
+                  <MapPin className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-sm dark:text-white">
+                  {isRot ? 'Radar Map' : isTh ? 'แผนที่บริเวณใกล้เคียง' : 'Nearby Map Radar'}
+                </h3>
+              </div>
+              <span className="w-2.5 h-2.5 bg-green-500 rounded-full animate-ping"></span>
+            </div>
+
+            <div 
+              onClick={() => navigate('/map')} 
+              className="relative h-40 rounded-2xl overflow-hidden cursor-pointer group bg-gradient-to-br from-blue-900 via-indigo-900 to-slate-900 flex items-center justify-center text-white"
+            >
+              {/* Simulated Map Visual Overlay */}
+              <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px] opacity-30"></div>
+              
+              <div className="relative z-10 text-center space-y-2 p-4">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-xs font-bold shadow-lg">
+                  <Sparkles className="w-3.5 h-3.5 text-yellow-300 animate-spin" />
+                  <span>{jobs.length} {isTh ? 'งานในบริเวณใกล้เคียง' : 'Jobs Active Nearby'}</span>
+                </div>
+                <p className="text-xs text-blue-100 opacity-90 group-hover:scale-105 transition-transform font-medium">
+                  {isTh ? 'แตะเพื่อเปิดแผนที่ Google Maps แบบเรียลไทม์ →' : 'Tap to open full interactive 3D map →'}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Stats & Highlights */}
+          <div className="theme-panel p-5 bg-white dark:bg-speede-darkGray border border-gray-100 dark:border-gray-800 rounded-3xl shadow-sm space-y-4">
+            <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-800/60 pb-3">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-speede-red/10 text-speede-red flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-sm dark:text-white">
+                  {isRot ? 'Ops Highlight' : isTh ? 'ไฮไลท์งานด่วน' : 'Job Market Highlights'}
+                </h3>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-3">
+              <div 
+                onClick={() => setActiveTab('Urgent')} 
+                className={`p-3.5 bg-gray-50 dark:bg-speede-black/40 rounded-2xl border border-gray-100 dark:border-gray-800/80 cursor-pointer hover:scale-105 transition-all ${
+                  activeTab === 'Urgent' ? 'ring-2 ring-speede-red bg-speede-red/5' : ''
+                }`}
+                title={isTh ? 'คลิกเพื่อดูเฉพาะงานด่วน' : 'Click to filter urgent jobs'}
+              >
+                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  {isTh ? 'งานด่วนพิเศษ' : 'Urgent Tasks'}
+                </div>
+                <div className="text-xl font-extrabold text-speede-red mt-1 flex items-center gap-1">
+                  <Zap className="w-4 h-4 fill-current" /> {urgentJobsCount}
+                </div>
+              </div>
+
+              <div 
+                onClick={() => setSortBy('salaryHigh')}
+                className={`p-3.5 bg-gray-50 dark:bg-speede-black/40 rounded-2xl border border-gray-100 dark:border-gray-800/80 cursor-pointer hover:scale-105 transition-all ${
+                  sortBy === 'salaryHigh' ? 'ring-2 ring-emerald-500 bg-emerald-500/5' : ''
+                }`}
+                title={isTh ? 'คลิกเพื่อจัดเรียงตามรายได้สูงสุด' : 'Click to sort by highest payout'}
+              >
+                <div className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                  {isRot ? 'Big Bag' : isTh ? 'รายได้สูงสุด' : 'Highest Payout'}
+                </div>
+                <div className="text-xl font-extrabold text-emerald-500 mt-1">
+                  ฿{maxSalary.toLocaleString()}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Community / Messaging Banner */}
+          <div className="theme-panel p-5 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-3xl shadow-lg space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Users className="w-5 h-5" />
+                <h4 className="font-bold text-sm">{isTh ? 'ชุมชนผู้ใช้งาน' : 'Active Community'}</h4>
+              </div>
+              <span className="px-2 py-0.5 bg-white/20 text-[10px] font-bold rounded-full">Live</span>
+            </div>
+            <p className="text-xs text-blue-100 leading-relaxed">
+              {isTh ? 'ต้องการสอบถามหรือพูดคุยเรื่องงานกับผู้จ้าง? เริ่มการแชทได้ทันที' : 'Looking to chat or ask details about a job? Connect with employers directly.'}
+            </p>
+            <button
+              onClick={() => {
+                if (!user) showAuthModal();
+                else navigate('/chat');
+              }}
+              className="w-full py-2.5 bg-white text-blue-600 rounded-xl text-xs font-bold hover:bg-blue-50 transition-colors shadow-md flex items-center justify-center gap-1.5"
+            >
+              <MessageSquare className="w-3.5 h-3.5" />
+              <span>{isTh ? 'เปิดหน้าข้อความ' : 'Open Messages'}</span>
+            </button>
+          </div>
+        </div>
+        {/* End Desktop Right Sidebar */}
       </div>
+      {/* End Grid Container */}
 
       <AnimatePresence>
         {detailedJob && (

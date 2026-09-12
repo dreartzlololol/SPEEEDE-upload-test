@@ -18,16 +18,20 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const { theme, language } = useSettings();
 
     const variants = {
-      primary: 'theme-button',
-      secondary: 'theme-button-secondary',
-      outline: 'theme-panel hover:-translate-y-[2px] transition-transform',
-      ghost: 'text-theme-muted hover:text-theme-text hover:bg-theme-surface/50 font-display',
+      primary:
+        'bg-blue-500 text-white border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]',
+      secondary:
+        'bg-gray-700 text-white border-gray-800 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]',
+      outline:
+        'bg-transparent text-blue-500 border-blue-500 border-b-[4px] hover:bg-blue-500/10 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:translate-y-[2px]',
+      ghost:
+        'text-theme-muted hover:text-theme-text hover:bg-theme-surface/50 font-display',
     };
 
     const sizes = {
-      sm: 'h-10 px-4 text-sm',
-      md: 'h-14 px-6 text-lg',
-      lg: 'h-16 px-8 text-xl',
+      sm: 'px-4 py-1.5 text-sm',
+      md: 'px-6 py-2 text-base',
+      lg: 'px-8 py-3 text-lg',
     };
 
     const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -39,13 +43,11 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <motion.button
-        whileHover={{ scale: 1.05, rotate: 2 }}
-        whileTap={{ scale: 0.9, rotate: -3 }}
         ref={ref}
         disabled={disabled || isLoading}
         onClick={handleClick}
         className={cn(
-          'inline-flex items-center justify-center rounded-2xl transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none uppercase',
+          'cursor-pointer transition-all rounded-lg font-bold inline-flex items-center justify-center focus:outline-none disabled:opacity-50 disabled:pointer-events-none uppercase',
           variants[variant],
           sizes[size],
           className
@@ -61,3 +63,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 Button.displayName = 'Button';
 
 export { Button };
+

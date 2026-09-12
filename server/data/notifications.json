@@ -1,5 +1,23 @@
 [
   {
+    "id": "notif-1789215422586-lwr5d8wmt",
+    "title": "เริ่มดาวน์โหลดสำเร็จ! 📥",
+    "message": "กำลังดาวน์โหลดไฟล์ติดตั้ง \"SpeedE-Setup.exe\" สำหรับอุปกรณ์ของคุณ",
+    "type": "success",
+    "timestamp": "2026-09-12T12:17:02.586Z",
+    "read": false,
+    "userEmail": "petchpobpob@gmail.com"
+  },
+  {
+    "id": "notif-1789214552477-mhu4ruxq4",
+    "title": "เริ่มดาวน์โหลดสำเร็จ! 📥",
+    "message": "กำลังดาวน์โหลดไฟล์ติดตั้ง \"SpeedE-Setup.exe\" สำหรับอุปกรณ์ของคุณ",
+    "type": "success",
+    "timestamp": "2026-09-12T12:02:32.477Z",
+    "read": true,
+    "userEmail": "petchpobpob@gmail.com"
+  },
+  {
     "id": "notif-1782978943576-rw82nsegf",
     "userEmail": "janyamonnuamnoo@gmail.com",
     "title": "ยอมรับคำขอเป็นเพื่อน 🤝",
