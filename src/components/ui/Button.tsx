@@ -47,15 +47,19 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || isLoading}
         onClick={handleClick}
         className={cn(
-          'cursor-pointer transition-all rounded-lg font-bold inline-flex items-center justify-center focus:outline-none disabled:opacity-50 disabled:pointer-events-none uppercase',
+          'cursor-pointer transition-all rounded-lg font-bold inline-flex items-center justify-center focus:outline-none disabled:opacity-50 disabled:pointer-events-none uppercase relative overflow-hidden group',
           variants[variant],
           sizes[size],
           className
         )}
         {...props}
       >
-        {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
-        {children}
+        <div className="absolute inset-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:translate-x-[150%] transition-transform duration-700 ease-in-out z-0 pointer-events-none skew-x-[-20deg]" />
+        
+        <span className="relative z-10 flex items-center justify-center">
+          {isLoading && <Loader2 className="mr-2 h-5 w-5 animate-spin" />}
+          {children}
+        </span>
       </motion.button>
     );
   }

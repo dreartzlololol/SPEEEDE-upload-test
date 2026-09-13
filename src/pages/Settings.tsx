@@ -16,6 +16,15 @@ const COLORS = [
   { name: 'Royal Purple', value: '#7928CA' },
 ];
 
+const Toggle = ({ enabled, onChange }: { enabled: boolean, onChange: () => void }) => (
+  <button 
+    onClick={onChange}
+    className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${enabled ? 'bg-speede-red' : 'bg-gray-300 dark:bg-gray-700'}`}
+  >
+    <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-all ${enabled ? 'left-[26px]' : 'left-0.5'}`}></div>
+  </button>
+);
+
 export default function Settings() {
   const { 
     theme, language, primaryColor, currency, distanceUnit, jobRadius, emailNotifs, soundNotifs, profileVisibility,
@@ -135,15 +144,6 @@ export default function Settings() {
 
   const isTh = language === 'th';
   const isRot = language === 'brainrot';
-
-  const Toggle = ({ enabled, onChange }: { enabled: boolean, onChange: () => void }) => (
-    <button 
-      onClick={onChange}
-      className={`w-12 h-6 rounded-full transition-colors relative flex-shrink-0 ${enabled ? 'bg-speede-red' : 'bg-gray-300 dark:bg-gray-700'}`}
-    >
-      <div className={`w-5 h-5 bg-white rounded-full absolute top-0.5 transition-all ${enabled ? 'left-[26px]' : 'left-0.5'}`}></div>
-    </button>
-  );
 
   return (
     <PageTransition className="max-w-3xl mx-auto pb-20 space-y-8">

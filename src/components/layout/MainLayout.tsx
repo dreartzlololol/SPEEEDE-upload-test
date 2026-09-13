@@ -1,3 +1,4 @@
+import React from 'react';
 import { useLocation, useOutlet } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Navbar from './Navbar';
@@ -20,9 +21,7 @@ export default function MainLayout() {
       <Navbar />
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 mt-16 relative">
         <AnimatePresence mode="wait">
-          <div key={location.pathname} className="w-full h-full">
-            {outlet}
-          </div>
+          {outlet && React.cloneElement(outlet as React.ReactElement, { key: location.pathname })}
         </AnimatePresence>
       </main>
       <QuickChatWidget />

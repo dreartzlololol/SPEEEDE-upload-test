@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Clock, Star, Filter, X, Zap, TrendingUp, Users, Sparkles, ChevronRight, MessageSquare } from 'lucide-react';
+import { motion, AnimatePresence, LayoutGroup } from 'framer-motion';
+import { Search, MapPin, Clock, Star, Filter, X, Zap, TrendingUp, Users, Sparkles, MessageSquare } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useJobs, Job } from '@/contexts/JobContext';
 import { useAuth } from '@/contexts/AuthContext';
@@ -274,36 +274,75 @@ export default function Feed() {
           </div>
         )}
         
-        <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setActiveTab(cat)}
-              className={`px-5 py-2.5 text-sm font-display tracking-wider whitespace-nowrap transition-all ${
-                activeTab === cat 
-                  ? 'theme-button-secondary translate-y-[-2px]' 
-                  : 'theme-panel hover:bg-theme-secondary/50'
-              }`}
-            >
-              {isRot ? (
-                cat === 'All' ? 'Everything' : 
-                cat === 'Urgent' ? '911 Ops 🚨' :
-                cat === 'Labor' ? 'Gym Bros' : 
-                cat === 'Delivery' ? 'UberEats' : 
-                cat === 'Handyman' ? 'Bob the Builder' : 
-                cat === 'Tutoring' ? 'Yapping Lesson' : 
-                cat === 'Design' ? 'Aura Editing' : cat
-              ) : isTh ? (
-                cat === 'All' ? 'ทั้งหมด' : 
-                cat === 'Urgent' ? 'ด่วนพิเศษ 🚨' :
-                cat === 'Labor' ? 'ใช้แรงงาน' : 
-                cat === 'Delivery' ? 'ส่งของ' : 
-                cat === 'Handyman' ? 'ช่างซ่อม' : 
-                cat === 'Tutoring' ? 'สอนพิเศษ' : 
-                cat === 'Design' ? 'ออกแบบ' : cat
-              ) : cat}
-            </button>
-          ))}
+        <div className="w-full overflow-x-auto pb-4 pt-2 scrollbar-hide">
+          <LayoutGroup id="feedTabs">
+            <div className="inline-flex relative bg-[var(--theme-surface)] shadow-[var(--theme-shadow)] border-2 border-[var(--theme-border-color)] p-2 rounded-full min-w-max transition-all">
+              {categories.map((cat) => {
+                const isActive = activeTab === cat;
+                const count = cat === 'All' 
+                  ? jobs.length 
+                  : cat === 'Urgent' 
+                    ? urgentJobsCount 
+                    : jobs.filter(j => j.category === cat).length;
+
+                return (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveTab(cat)}
+                    className={`relative z-10 flex items-center justify-center h-9 px-5 text-sm font-bold rounded-full cursor-pointer transition-colors duration-200 ${
+                      isActive 
+                        ? '' 
+                        : 'text-[var(--theme-text-muted)] hover:text-[var(--theme-text)]'
+                    }`}
+                    style={isActive ? { color: 'var(--speede-primary)' } : {}}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="categoryGlider"
+                        className="absolute inset-0 rounded-full -z-10"
+                        style={{ backgroundColor: 'var(--speede-primary)', opacity: 0.15 }}
+                        initial={false}
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                      />
+                    )}
+                  <span className="whitespace-nowrap z-10">
+                    {isRot ? (
+                      cat === 'All' ? 'Everything' : 
+                      cat === 'Urgent' ? '911 Ops 🚨' :
+                      cat === 'Labor' ? 'Gym Bros' : 
+                      cat === 'Delivery' ? 'UberEats' : 
+                      cat === 'Handyman' ? 'Bob the Builder' : 
+                      cat === 'Tutoring' ? 'Yapping Lesson' : 
+                      cat === 'Design' ? 'Aura Editing' : cat
+                    ) : isTh ? (
+                      cat === 'All' ? 'ทั้งหมด' : 
+                      cat === 'Urgent' ? 'ด่วนพิเศษ 🚨' :
+                      cat === 'Labor' ? 'ใช้แรงงาน' : 
+                      cat === 'Delivery' ? 'ส่งของ' : 
+                      cat === 'Handyman' ? 'ช่างซ่อม' : 
+                      cat === 'Tutoring' ? 'สอนพิเศษ' : 
+                      cat === 'Design' ? 'ออกแบบ' : cat
+                    ) : (
+                      cat === 'Urgent' ? 'Urgent 🚨' : cat
+                    )}
+                  </span>
+                  
+                  {count > 0 && (
+                    <span 
+                      className="ml-2 z-10 flex items-center justify-center px-1.5 min-w-[20px] h-[20px] text-[10px] rounded-full transition-colors font-extrabold"
+                      style={isActive 
+                        ? { backgroundColor: 'var(--speede-primary)', color: 'var(--theme-surface)' } 
+                        : { backgroundColor: 'var(--theme-secondary)', color: 'var(--theme-text-muted)' }
+                      }
+                    >
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+          </LayoutGroup>
         </div>
       </div>
 
