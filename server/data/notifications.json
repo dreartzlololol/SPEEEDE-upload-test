@@ -5,7 +5,7 @@
     "message": "กำลังดาวน์โหลดไฟล์ติดตั้ง \"SpeedE-Setup.exe\" สำหรับอุปกรณ์ของคุณ",
     "type": "success",
     "timestamp": "2026-09-12T12:17:02.586Z",
-    "read": false,
+    "read": true,
     "userEmail": "petchpobpob@gmail.com"
   },
   {
@@ -15,6 +15,38 @@
     "type": "success",
     "timestamp": "2026-09-12T12:02:32.477Z",
     "read": true,
+    "userEmail": "petchpobpob@gmail.com"
+  },
+  {
+    "id": "notif-1788419815173-vvbypivgt",
+    "userEmail": "janyamonnuamnoo@gmail.com",
+    "title": "[มุมมองผู้จ้าง] ผู้สมัครงานรายใหม่! 👥",
+    "message": "มีผู้สมัครงาน \"pobpetch\" ของคุณ คลิกเพื่อตรวจสอบและอนุมัติ",
+    "type": "info",
+    "timestamp": "2026-09-03T07:16:55.173Z",
+    "read": false,
+    "link": "/profile",
+    "data": {
+      "application": {
+        "jobId": 1780817952311,
+        "applicantName": "pobpetch",
+        "contact": "petchpobpob@gmail.com",
+        "experience": "หด้ก",
+        "message": "หำัะี",
+        "id": 1788419815165,
+        "status": "pending",
+        "timestamp": "2026-09-03T07:16:55.165Z"
+      }
+    }
+  },
+  {
+    "id": "notif-1788419815172-yro1pcvl2",
+    "title": "ส่งใบสมัครงานสำเร็จ! 📤",
+    "message": "ส่งใบสมัครสำหรับงาน \"1234\" เรียบร้อยแล้ว รอผู้จ้างตรวจสอบ",
+    "type": "info",
+    "timestamp": "2026-09-03T07:16:55.172Z",
+    "read": false,
+    "link": "/profile",
     "userEmail": "petchpobpob@gmail.com"
   },
   {

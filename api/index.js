@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-const db = require('./db.cjs');
+const db = require('./db.js');
 
 const app = express();
 const serverStartId = Date.now().toString();

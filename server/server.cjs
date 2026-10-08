@@ -1,4 +1,4 @@
-const app = require('../api/index.cjs');
+const app = require('../api/index.js');
 
 const PORT = process.env.PORT || 5000;
 
